@@ -5,7 +5,7 @@ from decimal import Decimal
 from django.http import HttpResponseRedirect ,HttpResponse
 from django.http import JsonResponse
 from xlsxwriter.workbook import Workbook
-import sys  
+import sys
 import StringIO
 import io
 import os
@@ -28,9 +28,9 @@ def gastodetalle (request, id=None):
 	print id
 	main =  Gasto.objects.get(id=id);
 	gasto = Detalleg.objects.filter(gasto=idview);
-	itbis = Detalleg.objects.filter(gasto=idview).aggregate(Sum('itbis'))['itbis__sum'] 
-	suma_total = Detalleg.objects.filter(gasto=idview).aggregate(Sum('total'))['total__sum'] 
-	subtotal = Detalleg.objects.filter(gasto=idview).aggregate(Sum('subtotal'))['subtotal__sum'] 
+	itbis = Detalleg.objects.filter(gasto=idview).aggregate(Sum('itbis'))['itbis__sum']
+	suma_total = Detalleg.objects.filter(gasto=idview).aggregate(Sum('total'))['total__sum']
+	subtotal = Detalleg.objects.filter(gasto=idview).aggregate(Sum('subtotal'))['subtotal__sum']
 	if suma_total is not None:
 		main.total_final = suma_total
 		main.save()
@@ -48,9 +48,9 @@ def detalleadmin (request, id=None):
 	print id
 	main =  Gasto.objects.get(id=id);
 	gasto = Detalleg.objects.filter(gasto=idview);
-	itbis = Detalleg.objects.filter(gasto=idview).aggregate(Sum('itbis'))['itbis__sum'] 
-	suma_total = Detalleg.objects.filter(gasto=idview).aggregate(Sum('total'))['total__sum'] 
-	subtotal = Detalleg.objects.filter(gasto=idview).aggregate(Sum('subtotal'))['subtotal__sum'] 
+	itbis = Detalleg.objects.filter(gasto=idview).aggregate(Sum('itbis'))['itbis__sum']
+	suma_total = Detalleg.objects.filter(gasto=idview).aggregate(Sum('total'))['total__sum']
+	subtotal = Detalleg.objects.filter(gasto=idview).aggregate(Sum('subtotal'))['subtotal__sum']
 	if suma_total is not None:
 		main.total_final = suma_total
 		main.save()
@@ -71,26 +71,26 @@ def creargasto (request):
 
 	detalle = request.POST.get('detalle')
 	subtotal = request.POST.get('subtotal')
-	
+
 	itbis = Decimal(request.POST.get('itbis'))
 	total = Decimal(request.POST.get('total'))
 	gastot = Gasto.objects.get(id=id);
 	gasto = Detalleg.objects.filter(gasto=gastot);
-	
+
 	subtotal = total - itbis
-	
+
 	solicit =  Detalleg.objects.create(gasto=gastot, rnc=rnc,ncf=ncf, fecha=fecha, detalle=detalle, subtotal=subtotal, itbis=itbis,total=total, estatus="No Procesado")
 	solicit.save()
 	objid = solicit.id
 	Gastos = []
-	
+
 	subt = solicit.subtotal
 	gasto = Detalleg.objects.filter(gasto=id);
-	itbist = Detalleg.objects.filter(gasto=id).aggregate(Sum('itbis'))['itbis__sum'] 
-	suma_totalt = Detalleg.objects.filter(gasto=id).aggregate(Sum('total'))['total__sum'] 
-	subtotalt = Detalleg.objects.filter(gasto=id).aggregate(Sum('subtotal'))['subtotal__sum'] 
-	suma_total = Detalleg.objects.filter(gasto=id).aggregate(Sum('total'))['total__sum'] 
-	subtotal2 = Detalleg.objects.filter(gasto=id).aggregate(Sum('subtotal'))['subtotal__sum'] 
+	itbist = Detalleg.objects.filter(gasto=id).aggregate(Sum('itbis'))['itbis__sum']
+	suma_totalt = Detalleg.objects.filter(gasto=id).aggregate(Sum('total'))['total__sum']
+	subtotalt = Detalleg.objects.filter(gasto=id).aggregate(Sum('subtotal'))['subtotal__sum']
+	suma_total = Detalleg.objects.filter(gasto=id).aggregate(Sum('total'))['total__sum']
+	subtotal2 = Detalleg.objects.filter(gasto=id).aggregate(Sum('subtotal'))['subtotal__sum']
 
 	record = {"id":objid, "gasto":gastot.id, "rnc":rnc,"ncf":ncf, "fecha":fecha, "detalle":detalle, "subtotal":subt, "itbis":itbis,"total":total, "estatus":"No Pagado", "suma_totalt":suma_total, "subtotalt":subtotalt, "itbist":itbist}
 	Gastos.append(record)
@@ -179,3 +179,10 @@ def cerrargasto(request):
 	return render(request, 'adming.html',{'gasto':gasto})
 
 
+def range_date(request):
+	fechaini = request.POST.get('fechaini')
+	fechafin = request.POST.get('fechafin')
+	gasto = Gasto.objects.filter(fecha__range=[fechaini, fechafin])
+	print "fechas"
+	print gasto
+	return render(request, 'adming2.html',{'gasto':gasto, 'gastos':gasto.all()})

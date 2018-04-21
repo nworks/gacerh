@@ -106,7 +106,7 @@
                                     <input  id="fecha2" type="text"  class="form-control" >
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" onclick="search()">Buscar</button>
+                                    <button type="button" class="btn btn-danger">Buscar</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                                   </div>
@@ -139,8 +139,6 @@
 
                                            var fechaini = document.getElementById("fecha1").value;
                                            var fechafin = document.getElementById("fecha2").value;
-                                           console.log(fechaini);
-                                           console.log(fechafin);
 
 
                                            $.ajax({
@@ -148,7 +146,7 @@
                                                             url: '{% url 'range_date'  %}',
                                                             type: 'POST',
                                                             success : function(data) {
-                                                                   
+                                                                   window.location.reload();
                                                                                },
                                                             error : function(message) {
                                                                    console.log(message);

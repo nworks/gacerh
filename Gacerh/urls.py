@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from users.views import LoginRequest,LogoutRequest,register2,export_excel,user_detail,export_excel2,activate,active
-from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin
+from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -42,4 +42,5 @@ urlpatterns = [
     url(r'^excel2/$', export_excel2 ,name="export_excel2"),
     url(r'^activate/$', activate ,name="activate"),
     url(r'^active/$', active ,name="active"),
+    url(r'^range_date/$', range_date ,name="range_date"),
 ]
