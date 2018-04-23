@@ -156,8 +156,8 @@
                                             </tbody>
                                         </table>
                                         <div style="text-align: right;">
-                                            <a href="/gastos"><button type="button" class="btn btn-danger">Procesar</button></a>
-                                          <button type="button" class="btn btn-default" onclick="Cerrar()" data-dismiss="modal">Volver</button>
+                                          <button type="button" class="btn btn-danger" onclick="Pay()">Procesar</button>
+                                          <a href="/pagos"> <button type="button" class="btn btn-default" " data-dismiss="modal">Volver</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +231,7 @@
                                                          }
 
 
-                        function Cerrar(id) {
+                        function Cerrar() {
                                        var id = document.getElementById("id").value;            
                                        console.log(id);
 
@@ -254,16 +254,27 @@
 
                         </script>
 
-                        <script type="text/javascript">
-                                   jQuery(function () {
-                                    jQuery('#startDate').datetimepicker();
-                                    jQuery('#endDate').datetimepicker();
-                                    jQuery("#startDate").on("dp.change",function (e) {
-                                           jQuery('#endDate').data("DateTimePicker").setMinDate(e.date);
-                                    });
-                                    jQuery("#endDate").on("dp.change",function (e) {
-                                           jQuery('#startDate').data("DateTimePicker").setMaxDate(e.date);
-                                    });
-                                   });
+                         <script type="text/javascript">
+                            function Pay() {
+                                           var id = document.getElementById("id").value;              
+                                           console.log(id);
+
+
+                                           $.ajax({
+                                                            data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
+                                                            url: '{% url 'paygasto'  %}',
+                                                            type: 'POST',
+                                                            success : function(data) {
+                                                                   window.location.reload();
+                                                                               },
+                                                            error : function(message) {
+                                                                   console.log(message);
+                                                            }
+                                                             });
+
+                                                        
+                                                         }
                         </script>
+
+
 {% endblock %}

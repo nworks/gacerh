@@ -96,8 +96,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-5">
+
+                                    <div  id="done" style="display: none;">
+                                        
+                                        <h3> <i class="material-icons">done</i>Su solicitud fue procesada exitosamente, espere a que el administrador le permita el acceso</h3>
+                                    </div>
                                    
-                                    <form class="form" method="" action="">
+                                    <form class="form" method="" action="" id="form" style="display: inline;">
                                         <div class="card-content">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
@@ -110,6 +115,12 @@
                                                     <i class="material-icons">lock_outline</i>
                                                 </span>
                                                 <input id="password" type="password" placeholder="Password..." class="form-control" />
+                                            </div>
+                                             <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">lock_outline</i>
+                                                </span>
+                                                <input id="re-password" type="password" placeholder="Re-Password..." class="form-control" />
                                             </div>
                                              <div class="input-group">
                                                 <span class="input-group-addon">
@@ -284,6 +295,7 @@
                                                       
                                            var codigo = document.getElementById("codigo").value;
                                            var password = document.getElementById("password").value;
+                                           var repassword = document.getElementById("re-password").value;
                                            var nombres = document.getElementById("nombres").value;
                                            var apellidos = document.getElementById("apellidos").value;
                                            var cedula = document.getElementById("cedula").value;
@@ -294,6 +306,8 @@
                                            var celular = document.getElementById("celular").value;
                                            var supervisor = document.getElementById("supervisor").value;
                                            var sup_email = document.getElementById("sup_email").value;
+
+
 
                                            console.log(codigo);
                                            console.log(password);
@@ -307,6 +321,25 @@
                                            console.log(celular);
                                            console.log(supervisor);
                                            console.log(sup_email);  
+                                           if ( codigo == "" || password == "" || repassword == "" || nombres == "" || apellidos == "" || cedula == "" || empresa == "" || puesto == "" || email == "" || telefono == "" || celular == "" || supervisor == "" || sup_email == "" ) 
+                                           {
+                                             alert("no pueden haber campos vacios")
+                                           }
+                                           else 
+                                           {
+
+                                           
+
+                                           if (password != repassword) {
+                                           
+                                             
+                                             alert("Los password no son identicos")
+                                           }
+
+                                           else{
+                                                 
+                                          document.getElementById( 'form' ).style.display = 'none';
+                                          document.getElementById( 'done' ).style.display = 'inline';
 
 
 
@@ -322,7 +355,8 @@
                                                                    console.log(message);
                                                             }
                                                              });
-
+ }
+ }
                                                         
                                                          }
 </script>

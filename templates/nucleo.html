@@ -71,6 +71,15 @@
                                         <span class="sidebar-normal"> Editar Perfil </span>
                                     </a>
                                 </li>
+                                {%if request.user.is_staff %}
+                                 <li>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> NF </span>
+                                        <span class="sidebar-normal"> Notificaciones </span>
+                                    </a>
+                                </li>
+                                 {% else %}
+                                 {% endif %}
                                 <li><a href="{% url 'logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
                             </ul>
                         </div>
