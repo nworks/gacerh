@@ -69,6 +69,8 @@ def creargasto (request):
 	ncf = request.POST.get('ncf')
 	fecha = request.POST.get('fecha')
 
+	select = request.POST.get('select')
+
 	detalle = request.POST.get('detalle')
 	subtotal = request.POST.get('subtotal')
 
@@ -79,7 +81,7 @@ def creargasto (request):
 
 	subtotal = total - itbis
 
-	solicit =  Detalleg.objects.create(gasto=gastot, rnc=rnc,ncf=ncf, fecha=fecha, detalle=detalle, subtotal=subtotal, itbis=itbis,total=total, estatus="No Procesado")
+	solicit =  Detalleg.objects.create(gasto=gastot, rnc=rnc,ncf=ncf, fecha=fecha, detalle=detalle, subtotal=subtotal, itbis=itbis,total=total, estatus="No Procesado",tipo=select)
 	solicit.save()
 	objid = solicit.id
 	Gastos = []
@@ -92,7 +94,7 @@ def creargasto (request):
 	suma_total = Detalleg.objects.filter(gasto=id).aggregate(Sum('total'))['total__sum']
 	subtotal2 = Detalleg.objects.filter(gasto=id).aggregate(Sum('subtotal'))['subtotal__sum']
 
-	record = {"id":objid, "gasto":gastot.id, "rnc":rnc,"ncf":ncf, "fecha":fecha, "detalle":detalle, "subtotal":subt, "itbis":itbis,"total":total, "estatus":"No Pagado", "suma_totalt":suma_total, "subtotalt":subtotalt, "itbist":itbist}
+	record = {"id":objid, "gasto":gastot.id, "rnc":rnc,"ncf":ncf, "fecha":fecha, "detalle":detalle, "subtotal":subt, "itbis":itbis,"total":total, "estatus":"No Pagado", "suma_totalt":suma_total, "subtotalt":subtotalt, "itbist":itbist, 'tipo':select}
 	Gastos.append(record)
 	response_gasto={"Gastos":Gastos}
 	print "Solicitud Atendida"

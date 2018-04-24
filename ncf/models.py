@@ -32,6 +32,7 @@ class Detalleg(models.Model):
 	detalle = models.TextField(blank=True)
 	itbis = models.DecimalField(max_digits=999999,decimal_places=2)
 	fecha = models.CharField(max_length=10)
+	tipo = models.CharField(max_length=50)
 	subtotal = models.DecimalField(max_digits=999999,decimal_places=2)
 	total = models.DecimalField(max_digits=999999,decimal_places=2)
 	estatus = models.CharField(max_length=20, blank=True)
