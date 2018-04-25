@@ -135,7 +135,7 @@
                                                     <td><input id="ncf" type="text" maxlength="11" maxlength="19" ></td>
                                                     <td class="text-right"><div class="form-group">
                                                         <div class='input-group date' id='datetimepicker1'>
-                                                            <input type='text' class="form-control" id="fecha" />
+                                                            <input type='text'  id="fecha" />
                                                             <span class="input-group-addon">
                                                                 <i class="material-icons">today</i>
                                                             </span>
@@ -190,7 +190,7 @@
                                             </tbody>
                                         </table>
                                         <div style="text-align: right;">
-                                            <a href="/gastos"><button type="button" class="btn btn-danger">Guardar</button></a>
+                                            <button type="button" onclick="guardar()" class="btn btn-danger">Guardar</button></a>
                                           <button type="button" class="btn btn-default" onclick="Cerrar()" data-dismiss="modal">Finalizar</button>
                                         </div>
                                     </div>
@@ -309,6 +309,96 @@
 
 
 
+                                            function guardar() {
+
+
+
+                                
+                                                         
+                                           console.log("Entro al Update");
+                                           var id = document.getElementById("id").value;
+                                           var fecha = document.getElementById("fecha").value;
+                                           var sel1 = document.getElementById("sel1").value;
+
+                                           console.log(fecha);
+
+                                           var estatus = false;
+
+                                           var rnc = document.getElementById("rnc").value;
+                                           console.log(rnc);
+                                            console.log(sel1);
+                                           var ncf = document.getElementById("ncf").value;
+                                           
+                                           var detalle = document.getElementById("detalle").value;
+                                           
+                                           var itbis = document.getElementById("itbis").value;
+                                           var total = document.getElementById("total").value;
+
+                                            if (rnc.length < 8 || rnc.length > 9) {
+                                               $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
+                                               swal("Good job!", "You clicked the button!", "success");
+                                               estatus = false;
+                                
+                                            }
+                                            else{
+                                                estatus = true;
+                                            }
+
+                                            if (ncf.length < 11 || ncf.length > 19) {
+                                                $.toaster({ priority : 'danger', title : 'Error NCF', message : 'ncf no valido'});
+                                                estatus = false;
+                                            }
+                                            else{
+                                                 estatus = true;
+                                            }
+
+                                             if (fecha == "") {
+                                                $.toaster({ priority : 'danger', title : 'Error FECHA', message : 'Fecha no puede estar vacia'});
+                                                estatus = false;
+                                            }
+                                            else{
+                                                 estatus = true;
+                                            }
+
+                                             if (itbis == "") {
+                                                $.toaster({ priority : 'danger', title : 'Error ITBIS', message : 'itbis no puede estar vacio'});
+                                                estatus = false;
+                                            }
+                                            else{
+                                                 estatus = true;
+                                            }
+
+                                             if (total == "") {
+                                                $.toaster({ priority : 'danger', title : 'Error TOTAL', message : 'Total no puede estar vacio'});
+                                                estatus = false;
+                                            }
+                                            else{
+                                                 estatus = true;
+                                            }
+
+                                            if(estatus == true){
+
+                                           $.ajax({
+                                                            data: { csrfmiddlewaretoken: '{{ csrf_token }}', 'rnc':rnc,'ncf':ncf,'detalle':detalle,
+                                                            'itbis':itbis,'total':total,'id':id, 'fecha':fecha, 'select':sel1},
+                                                            url: '{% url 'creargasto'  %}',
+                                                            type: 'POST',
+                                                            success : function(data) {
+                                                                window.location.replace("/gastos");
+                                                                //window.location.reload();
+                                                                              
+                                                                               },
+                                                            error : function(message) {
+                                                                   console.log(message);
+                                                            }
+                                                             });
+
+                                                        
+                                                         }
+                                            }
+
+
+
 
 
 
@@ -337,21 +427,44 @@
                                        var id = document.getElementById("id").value;            
                                        console.log(id);
 
+                                       swal({
+                                         title: "Estas Seguro?",
+                                         text: "Estas a punto de cerrar este gasto!",
+                                         icon: "warning",
+                                         buttons: true,
+                                         dangerMode: true,
+                                       })
+                                       .then((willDelete) => {
+                                         if (willDelete) {
 
-                                       $.ajax({
-                                                        data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
-                                                        url: '{% url 'cerrargasto'  %}',
-                                                        type: 'POST',
-                                                        success : function(data) {
-                                                               window.location.replace("/gastos");
-                                                                           },
-                                                        error : function(message) {
-                                                               console.log(message);
-                                                        }
-                                                         });
+                                            $.ajax({
+                                                             data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
+                                                             url: '{% url 'cerrargasto'  %}',
+                                                             type: 'POST',
+                                                             success : function(data) {
+                                                                    window.location.replace("/gastos");
+                                                                                },
+                                                             error : function(message) {
+                                                                    console.log(message);
+                                                             }
+                                                              });
 
-                                                    
-                                                     }
+                                                         
+                                                         
+
+
+
+
+                                           swal("El gasto fue cerrado exitosamente", {
+                                             icon: "success",
+                                           });
+                                         } else {
+                                           swal("Se cancelo la operacion!");
+                                         }
+                                       });
+
+ }
+                                       
 
 
                         </script>

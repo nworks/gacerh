@@ -16,6 +16,7 @@
                                                 <tr>
                                                     <th class="text-center">#</th>
                                                     <th>Usuario</th>
+                                                    <th>Nombre Completo</th>
                                                     <th>Proyecto / Referencia</th>
                                                     <th>Fecha</th>
                                                     <th class="text-right">Moneda</th>
@@ -32,6 +33,7 @@
                                                     
                                                     <td>{{gasto.id}}</td>
                                                     <td>{{gasto.comprador}}</td>
+                                                    <td>{{gasto.comprador.first_name}} {{gasto.comprador.last_name}}</td>
                                                     <td>{{gasto.referencia}}</td>
                                                     <td class="text-left">{{gasto.fecha|date:'d-m-y'}}</td>
                                                     <td class="text-right">{{gasto.moneda}}</td>
