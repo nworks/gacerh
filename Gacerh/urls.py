@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls.static import static
 from users.views import LoginRequest,LogoutRequest,register2,export_excel,user_detail,export_excel2,activate,active
 from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date
 
