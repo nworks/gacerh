@@ -43,4 +43,4 @@ urlpatterns = [
     url(r'^activate/$', activate ,name="activate"),
     url(r'^active/$', active ,name="active"),
     url(r'^range_date/$', range_date ,name="range_date"),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
