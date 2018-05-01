@@ -94,6 +94,17 @@ def creargasto (request):
 	suma_total = Detalleg.objects.filter(gasto=id).aggregate(Sum('total'))['total__sum']
 	subtotal2 = Detalleg.objects.filter(gasto=id).aggregate(Sum('subtotal'))['subtotal__sum']
 
+	main =  Gasto.objects.get(id=id);
+
+	if suma_total is not None:
+		main.total_final = suma_total
+		main.save()
+	else:
+		main.total_final = 0
+		main.save()
+		print "suma igual cero"
+	print "cambiando de pagina"
+
 	record = {"id":objid, "gasto":gastot.id, "rnc":rnc,"ncf":ncf, "fecha":fecha, "detalle":detalle, "subtotal":subt, "itbis":itbis,"total":total, "estatus":"No Pagado", "suma_totalt":suma_total, "subtotalt":subtotalt, "itbist":itbist, 'tipo':select}
 	Gastos.append(record)
 	response_gasto={"Gastos":Gastos}
