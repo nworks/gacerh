@@ -22,6 +22,35 @@ def user_detail(request):
 
 	return render(request, 'profile.html')
 
+
+
+def user_edit(request):
+	if request.method == 'POST':
+		id = request.POST.get('id')
+		telefono = request.POST.get('telefono')
+		celular = request.POST.get('celular')
+		supervisor = request.POST.get('supervisor')
+		email_sup = request.POST.get('email_sup')
+
+
+		print id
+		print telefono
+		print celular
+		print email_sup
+		user = User.objects.get(id=id)
+		obj = UserP.objects.get(user=user)
+		print user
+		print obj.user
+		obj.telefono = telefono
+		obj.celular = celular
+		obj.supervisor = supervisor
+		obj.email_super = email_sup
+		obj.save()
+		return render(request, 'editprofile.html')
+
+	return render(request, 'editprofile.html')
+
+
 def LoginRequest(request):
 	message = "Credenciales invalidas o No registradas"
 	# Si el usuario ya ha iniciado sesion anteriormente.

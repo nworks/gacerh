@@ -22,6 +22,7 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="{% static 'assetsre/js/jquery-2.2.4.min.js' %}" type="text/javascript"></script>
 </head>
 
 <body>
@@ -66,7 +67,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="/user_edit">
                                         <span class="sidebar-mini"> EP </span>
                                         <span class="sidebar-normal"> Editar Perfil </span>
                                     </a>
@@ -108,7 +109,7 @@
                     <li>
                         <a href="/activate">
                             <i class="material-icons">person</i>
-                            <p> Vista Detallada </p>
+                            <p> Solicitud Acceso </p>
                         </a>
                     </li>
                     {% else %}
@@ -239,4 +240,6 @@
 <script src="{% static 'assets10/js/jquery.mask.js' %}"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 </html>

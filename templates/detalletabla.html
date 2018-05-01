@@ -89,7 +89,7 @@
                                                     <th class="text-right">Subtotal</th>
                                                     <th class="text-right">ITBIS</th>
                                                     <th class="text-right">Total</th>
-                                                    <th class="text-right">Estatus</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody id="lista3">
@@ -106,8 +106,8 @@
                                                     <td class="text-right">{{gasto.subtotal}}</td>
                                                     <td class="text-right">{{gasto.itbis}}</td>
                                                     <td class="text-right">{{gasto.total}}</td>
-                                                    <td class="text-right"><span class="label label-warning">{{gasto.estatus}}</span></td>
-                                                    <td class="td-actions text-right">
+                                                    
+                                                    <td style="width: 20px" class="td-actions">
                                                         <button type="button" onclick="Remove({{gasto.id}})" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="">
                                                             <i class="material-icons">close</i>
                                                         </button>
@@ -128,17 +128,13 @@
 
                                                <tfoot>
                                                  <tr>      
-                                                    <td><button type="button" onclick="Edit()" rel="tooltip" class="btn btn-danger" data-original-title="" title="">
-                                                            Nueva Fila
-                                                        </button></td>
-                                                    <td><input id="rnc" type="text" minlength=9 maxlength="9"></td>
-                                                    <td><input id="ncf" type="text" maxlength="11" maxlength="19" ></td>
-                                                    <td class="text-right"><div class="form-group">
+                                                    <td></td>
+                                                    <td><input style="width: 90px" id="rnc" type="text" minlength=9 maxlength="11"></td>
+                                                    <td><input style="width: 150px" id="ncf" type="text" maxlength="19" maxlength="19" ></td>
+                                                    <td class="text-left"><div class="form-group">
                                                         <div class='input-group date' id='datetimepicker1'>
-                                                            <input type='text'  id="fecha" />
-                                                            <span class="input-group-addon">
-                                                                <i class="material-icons">today</i>
-                                                            </span>
+                                                            <input style="width: 80px"  mask="99/99/9999" placeholder="00/00/0000" maxlength="10" type='text'  id="fecha" />
+                                                            
                                                         </div>
                                                     </div></td>
                                                     <td class="text-right"><input id="detalle" type="text" ></td>
@@ -155,12 +151,18 @@
                                                         <option value="Vehiculo">Vehiculo</option>
                                                       </select>
                                                     </div></td>
-                                                    <td class="text-right"><input id="subtotal" type="number" value="AUTOMATICA"  disabled="true"></span></td>
-                                                    <td class="text-right"><input id="itbis" type="number" ></td>
-                                                    <td class="text-right"><input id="total" type="number" ></td>
+                                                    <td class="text-right"><input style="width: 120px" id="subtotal" type="number" value="AUTOMATICA"  disabled="true"></span></td>
+                                                    <td class="text-right"><input style="width: 120px" id="itbis" type="number" ></td>
+                                                    <td class="text-right"><input style="width: 120px" id="total" type="number" ></td>
                                                     
                                                 </tr>
                                                     <tr>
+                                                    <td colspan="1"></td>
+                                                    <td >
+                                                        <button style="text-align: left;" type="button" onclick="Edit()" rel="tooltip" class="btn btn-danger" data-original-title="" title="">
+                                                            Nueva Fila
+                                                        </button>
+                                                    </td>
 
                                                     <td colspan="2"></td>
                                                     <td class="td-total">
@@ -189,7 +191,9 @@
                                                 
                                             </tbody>
                                         </table>
+
                                         <div style="text-align: right;">
+                                           
                                             <button type="button" onclick="guardar()" class="btn btn-danger">Guardar</button></a>
                                           <button type="button" class="btn btn-default" onclick="Cerrar()" data-dismiss="modal">Finalizar</button>
                                         </div>
@@ -238,7 +242,7 @@
                                            var itbis = document.getElementById("itbis").value;
                                            var total = document.getElementById("total").value;
 
-                                            if (rnc.length < 8 || rnc.length > 9) {
+                                            if (rnc.length < 8 || rnc.length > 11) {
                                                $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
                                                estatus = false;
                                 
@@ -467,6 +471,9 @@
                                        
 
 
+                        </script>
+                        <script type="text/javascript">
+                            $('#fecha').maskInput();
                         </script>
 
                        

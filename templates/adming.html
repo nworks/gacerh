@@ -41,7 +41,18 @@
                                                     <td class="text-right">{{gasto.subtotal}}</td>
                                                     <td class="text-right">{{gasto.itbis}}</td>
                                                     <td class="text-right">{{gasto.total}}</td>
-                                                    <td class="text-right"><span class="label label-warning">{{gasto.estatus}}</span></td>
+                                                    <td class="text-right">
+                                                      {% if gasto.estatus == "No Procesado" %}
+                                                      <span class="label label-danger">{{gasto.estatus}}</span>
+                                                      {% elif gasto.estatus == "PROCESADO" %}
+                                                      <span class="label label-success">{{gasto.estatus}}</span>
+                                                      {% else %}
+                                                      <span class="label label-danger">{{gasto.estatus}}</span>
+
+                                                  
+                                                      {% endif %}
+
+                                                    </td>
                                                     <td class="td-actions text-right">
 
 
