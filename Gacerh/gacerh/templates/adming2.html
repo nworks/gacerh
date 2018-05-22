@@ -1,0 +1,164 @@
+{% extends 'nucleo.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-icon" data-background-color="red">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">Administrador de Gastos</h4>
+
+                                     <a href="{% url 'export_excel' %}"><button type="button" class="btn btn-danger btn-block" ><i class="material-icons">cloud_download</i>Exportar</button></a>
+                                    <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Buscar <i class="material-icons">search</i></button>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>RNC</th>
+                                                    <th>NCF</th>
+                                                    <th>Fecha</th>
+                                                    <th class="text-right">Detalle</th>
+                                                    <th class="text-right">Subtotal</th>
+                                                    <th class="text-right">ITBIS</th>
+                                                    <th class="text-right">Total</th>
+                                                    <th class="text-right">Estatus</th>
+                                                    <th class="text-right"> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                              {% for gasto in gastos %}
+                                                <tr>
+
+                                                    <td>{{gasto.id}}</td>
+                                                    <td>{{gasto.rnc}}</td>
+                                                    <td>{{gasto.ncf}}</td>
+                                                    <td class="text-right">{{gasto.fecha}}</td>
+                                                    <td class="text-right">{{gasto.detalle}}</td>
+                                                    <td class="text-right">{{gasto.subtotal}}</td>
+                                                    <td class="text-right">{{gasto.itbis}}</td>
+                                                    <td class="text-right">{{gasto.total}}</td>
+                                                    <td class="text-right"><span class="label label-warning">{{gasto.estatus}}</span></td>
+                                                    <td class="td-actions text-right">
+
+
+
+                                                       <button type="button" onclick="Remove()" rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="">
+                                                            <i class="material-icons">close</i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+
+
+                                                <!-- Modal -->
+                                                <div id="myModal{{gasto.id}}" class="modal fade" role="dialog">
+                                                  <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <div style="text-align: center"><h4 class="modal-title"> Modulo de pago #{{gasto.id}}</h4></div>
+                                                      </div>
+                                                      <div class="modal-body">
+
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Pagar Gasto</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+
+
+                                               {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><div>Modulo de busqueda</div></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <h4 class="card-title">Fecha Inicio</h4>
+                                    <input id="fecha1" type="text"  class="form-control" >
+                                    <h4 class="card-title">Fecha fin</h4>
+                                    <input  id="fecha2" type="text"  class="form-control" >
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger">Buscar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                        <script type="text/javascript">
+                        	function Pay(id) {
+
+                                           console.log(id);
+
+
+                                           $.ajax({
+                                                            data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
+                                                            url: '{% url 'pay'  %}',
+                                                            type: 'POST',
+                                                            success : function(data) {
+                                                                   window.location.reload();
+                                                                               },
+                                                            error : function(message) {
+                                                                   console.log(message);
+                                                            }
+                                                             });
+
+
+                                                         }
+
+                          function search() {
+
+                                           var fechaini = document.getElementById("fecha1").value;
+                                           var fechafin = document.getElementById("fecha2").value;
+
+
+                                           $.ajax({
+                                                            data: { csrfmiddlewaretoken: '{{ csrf_token }}','fechaini':fechaini,'fechafin':fechafin},
+                                                            url: '{% url 'range_date'  %}',
+                                                            type: 'POST',
+                                                            success : function(data) {
+                                                                   window.location.reload();
+                                                                               },
+                                                            error : function(message) {
+                                                                   console.log(message);
+                                                            }
+                                                             });
+
+
+                                                         }
+
+
+                        </script>
+
+
+
+{% endblock %}

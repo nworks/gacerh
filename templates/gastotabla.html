@@ -42,6 +42,10 @@
                                                             <i class="material-icons md-48"  >close</i>
                                                         </button></a>
                                                         {% else %}
+                                                        <a href="{% url 'PDF' id=gasto.id %}">
+                                                        <button type="button"  rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="">
+                                                            <i class="material-icons md-48"  >print</i>
+                                                        </button></a>
                                                         {% endif %}
                                                         
                                                         

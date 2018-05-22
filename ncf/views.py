@@ -19,6 +19,14 @@ def compania(request):
 	gasto = Gasto.objects.filter(comprador=request.user);
 	return render(request, 'gastotabla.html',{'gasto':gasto, 'gastos':gasto.all()})
 
+def PDF(request, id=None):
+	gastog = Gasto.objects.get(id=id);
+	gasto = Detalleg.objects.filter(gasto=gastog);
+	itbis = Detalleg.objects.filter(gasto=gastog).aggregate(Sum('itbis'))['itbis__sum']
+	suma_total = Detalleg.objects.filter(gasto=gastog).aggregate(Sum('total'))['total__sum']
+	subtotal = Detalleg.objects.filter(gasto=gastog).aggregate(Sum('subtotal'))['subtotal__sum']
+	return render(request, 'PDF.html',{'gasto':gasto, 'gastos':gasto.all(),'subtotal':subtotal,'itbis':itbis,'suma_total':suma_total})
+
 def newgasto(request):
 	gasto = Detalleg.objects.filter(gasto=1);
 	return render(request, 'vacantetabla0.html',{'gasto':gasto, 'gastos':gasto.all()})

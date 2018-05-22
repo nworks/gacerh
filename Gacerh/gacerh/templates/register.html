@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets10/img/apple-icon.png' %}" />
+    <link rel="icon" type="image/png" href="{% static 'assets10/img/favicon.png' %}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>ACERHGROUP</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="{% static 'assets10/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!--  Material Dashboard CSS    -->
+    <link href="{% static 'assets10/css/material-dashboard.css' %}" rel="stylesheet" />
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="{% static 'assets10/css/demo.css' %}" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body class="off-canvas-sidebar">
+    <nav class="navbar navbar-primary navbar-transparent navbar-absolute">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img height="70" width="200" src="{% static 'assets10/img/logo4.png' %}" alt="Home" />
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="">
+                        <a href="/register">
+                            <i class="material-icons">person_add</i> Register
+                        </a>
+                    </li>
+                    <li class=" active ">
+                        <a href="/login">
+                            <i class="material-icons">fingerprint</i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="wrapper wrapper-full-page">
+        <div class="full-page register-page" filter-color="black" data-image="{% static 'assets10/img/login2.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="card card-signup">
+                            <h2 class="card-title text-center">Solicitud de Acceso</h2>
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <div class="card-content">
+                                        <div class="info info-horizontal">
+                                            <div class="icon icon-rose">
+                                                <i class="material-icons">close</i>
+                                            </div>
+                                            <div class="description">
+                                                <h4 class="info-title">Restricciones</h4>
+                                                <p class="description">
+                                                    Recuerda llenar los campos con informacion certera y real.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="info info-horizontal">
+                                            <div class="icon icon-primary">
+                                                <i class="material-icons">warning</i>
+                                            </div>
+                                            <div class="description">
+                                                <h4 class="info-title">Alertas</h4>
+                                                <p class="description">
+                                                   Llena este formulario solo si se te solicito llenarlo.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="info info-horizontal">
+                                            <div class="icon icon-info">
+                                                <i class="material-icons">group</i>
+                                            </div>
+                                            <div class="description">
+                                                <h4 class="info-title">Ingreso</h4>
+                                                <p class="description">
+                                                    Tu solicitud sera enviada al administrador y este se encargara de habilitar tu acceso.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+
+                                    <div  id="done" style="display: none;">
+                                        
+                                        <h3> <i class="material-icons">done</i>Su solicitud fue procesada exitosamente, espere a que el administrador le permita el acceso</h3>
+                                    </div>
+                                   
+                                    <form class="form" method="" action="" id="form" style="display: inline;">
+                                        <div class="card-content">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">perm_identity</i>
+                                                </span>
+                                                <input id="codigo" type="text" class="form-control" placeholder="Codigo Acerh...">
+                                            </div>
+                                             <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">lock_outline</i>
+                                                </span>
+                                                <input id="password" type="password" placeholder="Password..." class="form-control" />
+                                            </div>
+                                             <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">lock_outline</i>
+                                                </span>
+                                                <input id="re-password" type="password" placeholder="Re-Password..." class="form-control" />
+                                            </div>
+                                             <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                                <input id="nombres" type="text" class="form-control" placeholder="Nombres...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                                <input id="apellidos" type="text" class="form-control" placeholder="Apellidos...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">credit_card</i>
+                                                </span>
+                                                <input id="cedula" type="text" class="form-control" placeholder="Cedula...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">home</i>
+                                                </span>
+                                                <input id="empresa" type="text" class="form-control" placeholder="Empresa...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">assignment_ind</i>
+                                                </span>
+                                                <input id="puesto" type="text" class="form-control" placeholder="Puesto...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">email</i>
+                                                </span>
+                                                <input id="email" type="text" class="form-control" placeholder="Email...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">phone</i>
+                                                </span>
+                                                <input id="telefono" type="text" class="form-control" placeholder="Telefono...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">phonelink_ring</i>
+                                                </span>
+                                                <input id="celular" type="text" class="form-control" placeholder="Celular...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">supervisor_account</i>
+                                                </span>
+                                                <input id="supervisor" type="text" class="form-control" placeholder="Supervisor...">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">email</i>
+                                                </span>
+                                                <input id="sup_email" type="text" class="form-control" placeholder="Email Supervisor...">
+                                            </div>
+                                           
+                                            
+                                        </div>
+                                        <div class="footer text-center">
+                                            <div id="solicitar" >
+                                            <a onclick="register()" class="btn btn-danger btn-round">Solicitar Acceso</a>
+                                            </div>
+                                            <div id="solicitado" style="display: none;" >
+                                             <a  class="btn btn-info btn-round">Acceso Solicitado</a>
+                                             </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container">
+                    <nav class="pull-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Company
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Portofolio
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Blog
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="http://www.creative-tim.com"> Creative Tim </a>, made with love for a better web
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<!--   Core JS Files   -->
+<script src="{% static 'assets10/js/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets10/js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets10/js/material.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets10/js/perfect-scrollbar.jquery.min.js' %}" type="text/javascript"></script>
+<!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<!-- Library for adding dinamically elements -->
+<script src="{% static 'assets10/js/arrive.min.js' %}" type="text/javascript"></script>
+<!-- Forms Validations Plugin -->
+<script src="{% static 'assets10/js/jquery.validate.min.js' %}"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="{% static 'assets10/js/moment.min.js' %}"></script>
+<!--  Charts Plugin, full documentation here: https://gionkunz.github.io/chartist-js/ -->
+<script src="{% static 'assets10/js/chartist.min.js' %}"></script>
+<!--  Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+<script src="{% static 'assets10/js/jquery.bootstrap-wizard.js' %}"></script>
+<!--  Notifications Plugin, full documentation here: http://bootstrap-notify.remabledesigns.com/    -->
+<script src="{% static 'assets10/js/bootstrap-notify.js' %}"></script>
+<!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+<script src="{% static 'assets10/js/bootstrap-datetimepicker.js' %}"></script>
+<!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+<script src="{% static 'assets10/js/jquery-jvectormap.js' %}"></script>
+<!-- Sliders Plugin, full documentation here: https://refreshless.com/nouislider/ -->
+<script src="{% static 'assets10/js/nouislider.min.js' %}"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+<script src="{% static 'assets10/js/jquery.select-bootstrap.js' %}"></script>
+<!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
+<script src="{% static 'assets10/js/jquery.datatables.js' %}"></script>
+<!-- Sweet Alert 2 plugin, full documentation here: https://limonte.github.io/sweetalert2/ -->
+<script src="{% static 'assets10/js/sweetalert2.js' %}"></script>
+<!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script src="{% static 'assets10/js/jasny-bootstrap.min.js' %}"></script>
+<!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+<script src="{% static 'assets10/js/fullcalendar.min.js' %}"></script>
+<!-- Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+<script src="{% static 'assets10/js/jquery.tagsinput.js' %}"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="{% static 'assets10/js/material-dashboard.js' %}"></script>
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="{% static 'assets10/js/demo.js' %}"></script>
+<script type="text/javascript">
+    $().ready(function() {
+        demo.checkFullPageBackgroundImage();
+
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+        }, 700)
+    });
+
+     function register() {
+                                                      
+                                           var codigo = document.getElementById("codigo").value;
+                                           var password = document.getElementById("password").value;
+                                           var repassword = document.getElementById("re-password").value;
+                                           var nombres = document.getElementById("nombres").value;
+                                           var apellidos = document.getElementById("apellidos").value;
+                                           var cedula = document.getElementById("cedula").value;
+                                           var empresa = document.getElementById("empresa").value;
+                                           var puesto = document.getElementById("puesto").value;
+                                           var email = document.getElementById("email").value;
+                                           var telefono = document.getElementById("telefono").value;
+                                           var celular = document.getElementById("celular").value;
+                                           var supervisor = document.getElementById("supervisor").value;
+                                           var sup_email = document.getElementById("sup_email").value;
+
+
+
+                                           console.log(codigo);
+                                           console.log(password);
+                                           console.log(nombres);
+                                           console.log(apellidos);
+                                           console.log(cedula);
+                                           console.log(empresa);
+                                           console.log(puesto);
+                                           console.log(email);
+                                           console.log(telefono);
+                                           console.log(celular);
+                                           console.log(supervisor);
+                                           console.log(sup_email);  
+                                           if ( codigo == "" || password == "" || repassword == "" || nombres == "" || apellidos == "" || cedula == "" || empresa == "" || puesto == "" || email == "" || telefono == "" || celular == "" || supervisor == "" || sup_email == "" ) 
+                                           {
+                                             alert("no pueden haber campos vacios")
+                                           }
+                                           else 
+                                           {
+
+                                           
+
+                                           if (password != repassword) {
+                                           
+                                             
+                                             alert("Los password no son identicos")
+                                           }
+
+                                           else{
+                                                 
+                                          document.getElementById( 'form' ).style.display = 'none';
+                                          document.getElementById( 'done' ).style.display = 'inline';
+
+
+
+                                           $.ajax({
+                                                            data: { csrfmiddlewaretoken: '{{ csrf_token }}','codigo':codigo,'password':password,'nombres':nombres,'apellidos':apellidos,'cedula':cedula,'empresa':empresa,'puesto':puesto,'email':email,'telefono':telefono,'celular':celular,'supervisor':supervisor,'sup_email':sup_email},
+                                                            url: '{% url 'register'  %}',
+                                                            type: 'POST',
+                                                            success : function(data) {
+                                                                   document.getElementById("solicitar").style.display = 'none';
+                                                                   document.getElementById("solicitado").style.display = 'inline'; //
+                                                                               },
+                                                            error : function(message) {
+                                                                   console.log(message);
+                                                            }
+                                                             });
+ }
+ }
+                                                        
+                                                         }
+</script>
+
+</html>
