@@ -17,10 +17,12 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">#</th>
+                                                    <th class="text-left">Usuario</th>
                                                     <th>RNC</th>
                                                     <th>NCF</th>
                                                     <th>Fecha</th>
                                                     <th class="text-right">Detalle</th>
+                                                    <th class="text-right">Tipo</th>
                                                     <th class="text-right">Subtotal</th>
                                                     <th class="text-right">ITBIS</th>
                                                     <th class="text-right">Total</th>
@@ -34,10 +36,12 @@
                                                 <tr>
 
                                                     <td>{{gasto.id}}</td>
+                                                    <td>{{gasto.comprador.username}}</td>
                                                     <td>{{gasto.rnc}}</td>
                                                     <td>{{gasto.ncf}}</td>
                                                     <td class="text-right">{{gasto.fecha}}</td>
                                                     <td class="text-right">{{gasto.detalle}}</td>
+                                                    <td class="text-right">{{gasto.tipo}}</td>
                                                     <td class="text-right">{{gasto.subtotal}}</td>
                                                     <td class="text-right">{{gasto.itbis}}</td>
                                                     <td class="text-right">{{gasto.total}}</td>

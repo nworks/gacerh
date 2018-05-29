@@ -174,6 +174,25 @@ def pay(request):
 	return render(request, 'adminpago.html',{'gasto':gasto})
 
 
+
+
+
+def reabierto(request,id=None):
+	idview = id
+	print idview
+	print "entro al pago"
+	gasto = Gasto.objects.get(id=idview);
+	gasto.estatus = "Abierto"
+	gasto.save()
+
+	gastod = Detalleg.objects.filter(gasto=gasto);
+	for obj in gastod:
+		obj.estatus = "Abierto"
+		obj.save()
+
+	return render(request, 'adminpago.html',{'gasto':gasto})
+
+
 def paygasto(request):
 	idview = request.POST.get('id')
 	print idview

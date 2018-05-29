@@ -35,6 +35,10 @@
                                                     <td class="text-right"><span class="label label-info">{{gasto.estatus}}</span></td>
                                                     <td class="td-actions text-right">
                                                         {% if gasto.estatus == "Abierto" %}
+                                                        <a href="{% url 'PDF' id=gasto.id %}">
+                                                        <button type="button"  rel="tooltip" class="btn btn-danger btn-simple" data-original-title="" title="">
+                                                            <i class="material-icons md-48"  >print</i>
+                                                        </button></a>
                                                         <a href="{% url 'detalle' id=gasto.id %}">{{post.titulo}}<button type="button"  rel="tooltip" class="btn btn-success btn-simple" data-original-title="" title="">
                                                             <i class="material-icons md-48">edit</i>
                                                         </button></a>

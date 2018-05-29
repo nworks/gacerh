@@ -70,10 +70,10 @@
                                                          <a href="/detalleadmin/{{gasto.id}}"><button type="button"  rel="tooltip" class="btn btn-warning " >
                                                             <i class="material-icons"><i class="material-icons">remove_red_eye</i></i>
                                                         </button></a>
-                                                        
+                                                        <a href="{% url 'reopen' id=gasto.id %}">
                                                        <button type="button" onclick="Remove()" rel="tooltip" class="btn btn-danger " data-original-title="" title="">
                                                             <i class="material-icons">close</i>
-                                                        </button>
+                                                        </button></a>
                                                          {% endif %}
                                                     </td>
                                                 </tr>

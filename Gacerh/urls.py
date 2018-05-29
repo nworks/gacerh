@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from users.views import LoginRequest,LogoutRequest,register2,export_excel,user_detail,export_excel2,activate,active,user_edit
-from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF
+from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -48,4 +48,5 @@ urlpatterns = [
     url(r'^user_edit/$', user_edit ,name="user_edit"),
     url(r'^PDF2/$', PDF ,name="PDF"),
     url(r'^PDF/(?P<id>\d+)/$',PDF, name="PDF"),
+    url(r'^reopen/(?P<id>\d+)/$',reabierto, name="reopen"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
