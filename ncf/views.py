@@ -164,6 +164,12 @@ def pagos(request):
 	return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
 
 
+def past(request):
+	today = datetime.date.today()
+	gasto = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month-1)
+	return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
+
+
 def pay(request):
 	idview = request.POST.get('id')
 	print idview
@@ -175,12 +181,10 @@ def pay(request):
 
 
 
-
-
 def reabierto(request,id=None):
 	idview = id
 	print idview
-	print "entro al pago"
+	print "abriendo gasto de nuevo"
 	gasto = Gasto.objects.get(id=idview);
 	gasto.estatus = "Abierto"
 	gasto.save()

@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from users.views import LoginRequest,LogoutRequest,register2,export_excel,user_detail,export_excel2,activate,active,user_edit
-from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto
+from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto,past
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^removerdetalle/',removerdetalle, name="removerdetalle"),
     url(r'^admintable/',admintable, name="admintable" ),
     url(r'^pagos/',pagos, name="pagos" ),
+    url(r'^pagospast/',past, name="pagospast" ),
     url(r'^pay/',pay, name="pay" ),
     url(r'^paygasto/',paygasto, name="paygasto" ),
     url(r'^cerrargasto/',cerrargasto, name="cerrargasto" ),
