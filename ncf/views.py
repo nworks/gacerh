@@ -10,7 +10,7 @@ import StringIO
 import io
 import os
 from datetime import datetime
-
+from .forms import fechaform
 from django.shortcuts import render
 from ncf.models import Gasto, Detalleg
 import datetime
@@ -149,12 +149,31 @@ def removerdetalle(request, id=None):
 	return render(request, 'detalletabla.html')
 
 def admintable(request):
-	today = datetime.date.today()
-	print today
-	gasto1 = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month).values_list('id', flat=True)
-	print gasto1
-	gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
-	return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
+	if request.method == 'POST':
+		mes = request.POST.get('mes')
+		ano = request.POST.get('ano')
+		print "entro al form"
+		gasto1 = Gasto.objects.filter(fecha__year=int(ano)).filter(fecha__month=int(mes)).values_list('id', flat=True)
+		gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
+		return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
+
+	elif request.method == 'GET':
+		mes = request.GET.get('mes')
+		ano = request.GET.get('ano')
+		
+
+		if mes == None:
+			today = datetime.date.today()
+			print today
+			gasto1 = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month).values_list('id', flat=True)
+			print gasto1
+			gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
+			return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
+		else:
+			return export_excelfecha(request, mes, ano)
+		
+
+		
 
 
 
@@ -230,3 +249,93 @@ def range_date(request):
 	print "fechas"
 	print gasto
 	return render(request, 'adming2.html',{'gasto':gasto, 'gastos':gasto.all()})
+
+
+def export_excelfecha(request, mes, ano):
+    #Llamada a la libreria para escribir en bits
+    output = io.BytesIO()
+
+    #Se inicializa el workbook de excel en cache
+    workbook = Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet()
+
+    #se setea la variable cell con 8 para que empieze a escribir desde la celda 8
+    cell = 8
+    #ciclo que busca todos los objetos con estatus 195(por enviar) para ser escritos en el excel
+    hoy = datetime.date.today()
+    print hoy
+    gasto1 = Gasto.objects.filter(fecha__year=int(ano)).filter(fecha__month=int(mes)).values_list('id', flat=True)
+    print gasto1
+    gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
+
+
+
+
+    for obj in gasto2:
+    	#indica desde que celda se escribe el titulo de los id de los objetos
+    	worksheet.write_string(cell,0, str(obj.id))
+    	#indica desde que celda se escribiran los emails
+    	worksheet.write_string(cell,1, obj.rnc)
+    	#indica desde que celda se escribiran los codigos de pss
+    	worksheet.write_string(cell,2, str(obj.ncf))
+    	#indica desde que celda se escribiran la ruta de los archivos
+    	worksheet.write_string(cell,3, obj.fecha)
+    	#escribre el username
+    	worksheet.write_string(cell,4, obj.detalle)
+
+    	worksheet.write_string(cell,5, str(obj.subtotal))
+
+    	worksheet.write_string(cell,6, str(obj.itbis))
+
+    	worksheet.write_string(cell,7, str(obj.total))
+
+    	worksheet.write_string(cell,8, obj.estatus)
+
+    	#Se realiza el aumento de la celda para seguir escribiendo hacia abajo
+    	cell = cell + 1
+
+
+
+
+    #Variable que define el estilo de negrita
+    bold = workbook.add_format({'bold': 1}) #letra negrita
+    #Variable que define el tamanio de las letras
+    size = workbook.add_format({'font_size': 20})
+    #Define el color rojo de las celdas
+    green = workbook.add_format({'bg_color': 'red', 'bold': 1})
+    #Escriben los enunciados del reporte de excel y ejecuta el logo
+    worksheet.write('C5', 'Reporte en excel de Acerh, Detalle de pago',size)
+    worksheet.insert_image('B4', 'static/plugins/logo2.png', {'x_scale': 0.3, 'y_scale': 0.3})
+    worksheet.set_column('A:A', 5)
+    worksheet.write('A8', 'ID',green)
+    worksheet.set_column('B:B', 50)
+    worksheet.write('B8', 'rnc',green)
+    worksheet.set_column('C:C', 40)
+    worksheet.write('C8', 'ncf',green)
+    worksheet.set_column('D:D', 100)
+    worksheet.write('D8', 'fecha',green)
+    worksheet.set_column('E:E', 100)
+    worksheet.write('E8', 'detalle',green)
+    worksheet.set_column('F:F', 100)
+    worksheet.write('F8', 'subtotal',green)
+    worksheet.set_column('G:G', 100)
+    worksheet.write('G8', 'itbis',green)
+    worksheet.set_column('H:H', 100)
+    worksheet.write('H8', 'total',green)
+    worksheet.set_column('I:I', 100)
+    worksheet.write('I8', 'estatus',green)
+
+
+
+    #worksheet.add_table('B3:F7') #TABLA
+    #Cierra el workbook del excel para ser guardado
+    workbook.close()
+
+    output.seek(0)
+    #response que contiene el archivo xlsx que sera devuelto a la ventana del navegador
+    response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = "attachment; filename=PagoReport.xlsx"
+
+    #funcion de retorno
+    return response
+	
