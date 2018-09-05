@@ -90,19 +90,19 @@
                     {%if request.user.is_staff %}
                     <li>
                         <a href="/gastos">
-                            <i class="material-icons">dashboard</i>
+                            <i class="material-icons">money</i>
                             <p> Tus Gastos </p>
                         </a>
                     </li>
                     <li>
                         <a href="/pagos">
-                            <i class="material-icons">dashboard</i>
+                            <i class="material-icons">monetization_on</i>
                             <p> Pagos </p>
                         </a>
                     </li>
                     <li>
                         <a href="/admintable">
-                            <i class="material-icons">dashboard</i>
+                            <i class="material-icons">remove_red_eye</i>
                             <p> Vista Detallada </p>
                         </a>
                     </li>
@@ -110,6 +110,13 @@
                         <a href="/activate">
                             <i class="material-icons">person</i>
                             <p> Solicitud Acceso </p>
+                        </a>
+                    </li>
+
+                     <li>
+                        <a href="/novedades">
+                            <i class="material-icons">date_range</i>
+                            <p> Gestion Novedades </p>
                         </a>
                     </li>
                     {% else %}

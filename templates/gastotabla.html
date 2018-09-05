@@ -102,7 +102,13 @@
                                            console.log("Entro al crear");
                                            var referencia = document.getElementById("referencia").value;
                                            var moneda = document.getElementById("moneda").value;
-                                           $.ajax({
+                                           if (referencia == "") {
+                                                $.toaster({ priority : 'danger', title : 'Error Referencia', message : 'La referencia no puede estar en blanco'});
+                                                estatus = false;
+                                                
+                                            }
+                                            else{
+                                              $.ajax({
                                                             data: { csrfmiddlewaretoken: '{{ csrf_token }}','moneda':moneda, 'referencia':referencia},
                                                             url: '{% url 'creargastobase'  %}',
                                                             type: 'POST',
@@ -116,6 +122,10 @@
 
                                                         
                                                          }
+
+                                            }
+
+                                           
 
 
                           function Remove(id) {

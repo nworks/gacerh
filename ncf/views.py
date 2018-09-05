@@ -260,7 +260,7 @@ def export_excelfecha(request, mes, ano):
     worksheet = workbook.add_worksheet()
 
     #se setea la variable cell con 8 para que empieze a escribir desde la celda 8
-    cell = 8
+    cell = 1
     #ciclo que busca todos los objetos con estatus 195(por enviar) para ser escritos en el excel
     hoy = datetime.date.today()
     print hoy
@@ -272,6 +272,7 @@ def export_excelfecha(request, mes, ano):
 
 
     for obj in gasto2:
+    	gasto3 = Gasto.objects.get(id=obj.gasto.id)
     	#indica desde que celda se escribe el titulo de los id de los objetos
     	worksheet.write_string(cell,0, str(obj.id))
     	#indica desde que celda se escribiran los emails
@@ -291,6 +292,10 @@ def export_excelfecha(request, mes, ano):
 
     	worksheet.write_string(cell,8, obj.estatus)
 
+    	worksheet.write_string(cell,9, gasto3.comprador.username)
+
+    	worksheet.write_string(cell,10, gasto3.referencia)
+
     	#Se realiza el aumento de la celda para seguir escribiendo hacia abajo
     	cell = cell + 1
 
@@ -304,26 +309,28 @@ def export_excelfecha(request, mes, ano):
     #Define el color rojo de las celdas
     green = workbook.add_format({'bg_color': 'red', 'bold': 1})
     #Escriben los enunciados del reporte de excel y ejecuta el logo
-    worksheet.write('C5', 'Reporte en excel de Acerh, Detalle de pago',size)
-    worksheet.insert_image('B4', 'static/plugins/logo2.png', {'x_scale': 0.3, 'y_scale': 0.3})
     worksheet.set_column('A:A', 5)
-    worksheet.write('A8', 'ID',green)
-    worksheet.set_column('B:B', 50)
-    worksheet.write('B8', 'rnc',green)
-    worksheet.set_column('C:C', 40)
-    worksheet.write('C8', 'ncf',green)
-    worksheet.set_column('D:D', 100)
-    worksheet.write('D8', 'fecha',green)
-    worksheet.set_column('E:E', 100)
-    worksheet.write('E8', 'detalle',green)
-    worksheet.set_column('F:F', 100)
-    worksheet.write('F8', 'subtotal',green)
-    worksheet.set_column('G:G', 100)
-    worksheet.write('G8', 'itbis',green)
-    worksheet.set_column('H:H', 100)
-    worksheet.write('H8', 'total',green)
-    worksheet.set_column('I:I', 100)
-    worksheet.write('I8', 'estatus',green)
+    worksheet.write('A1', 'ID',green)
+    worksheet.set_column('B:B', 20)
+    worksheet.write('B1', 'rnc',green)
+    worksheet.set_column('C:C', 20)
+    worksheet.write('C1', 'ncf',green)
+    worksheet.set_column('D:D', 10)
+    worksheet.write('D1', 'fecha',green)
+    worksheet.set_column('E:E', 50)
+    worksheet.write('E1', 'detalle',green)
+    worksheet.set_column('F:F', 20)
+    worksheet.write('F1', 'subtotal',green)
+    worksheet.set_column('G:G', 20)
+    worksheet.write('G1', 'itbis',green)
+    worksheet.set_column('H:H', 20)
+    worksheet.write('H1', 'total',green)
+    worksheet.set_column('I:I', 20)
+    worksheet.write('I1', 'estatus',green)
+    worksheet.set_column('J:J', 20)
+    worksheet.write('J1', 'usuario',green)
+    worksheet.set_column('K:K', 20)
+    worksheet.write('K1', 'referencia',green)
 
 
 
@@ -339,3 +346,12 @@ def export_excelfecha(request, mes, ano):
     #funcion de retorno
     return response
 	
+
+
+def novedadesreg (request, id=None):
+	idview = id
+	print id
+	main =  Gasto.objects.all()
+
+	
+	return render(request, 'novedadesregistro.html',{'main':main})
