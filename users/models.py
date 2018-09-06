@@ -40,9 +40,7 @@ class UserP(models.Model):
 	celular = models.CharField(max_length=20, blank=True)
 	supervisor = models.TextField(blank=True)
 	email_super = models.CharField(max_length=100, blank=True)
-	sup_level = models.CharField(max_length=100, blank=True)
-	ingreso = models.CharField(max_length=20, blank=True)
-	area = models.ForeignKey(Area)
+
 
 	def __unicode__(self):
 		return self.user.username
