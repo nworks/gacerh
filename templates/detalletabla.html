@@ -406,9 +406,12 @@
 
 
 
-                            function Remove(id) {
+                            function Remove(numero) {
                                                          
-                                           console.log(id);
+                                           console.log(numero);
+
+                                           var id = String(numero);
+                                           console.log(id.replace(",", ''));
 
 
                                            $.ajax({
