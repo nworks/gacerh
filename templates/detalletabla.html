@@ -297,7 +297,7 @@
                                                                    $("#lista3").append("<tr id='fila'"+data.Gastos[0].id+"'><td>"+ data.Gastos[0].id+ "</td><td>"+ data.Gastos[0].rnc+ "</td><td>"+ data.Gastos[0].ncf+ "</td><td class='text-left'>"+ data.Gastos[0].fecha+ "</td><td class='text-right'>"+ data.Gastos[0].detalle+ "</td><td class='text-right'>"+ data.Gastos[0].tipo+ "</td><td class='text-right'>"+ data.Gastos[0].subtotal+ "</td><td class='text-right'>"+ data.Gastos[0].itbis+ "</td><td class='text-right'>"+ data.Gastos[0].total+ "</td><td class='text-right'><span class='label label-warning'>"+ data.Gastos[0].estatus+ "</span></td><td class='td-actions text-right'><button type='button' onclick='Remove("+data.Gastos[0].id+")' rel='tooltip' class='btn btn-danger btn-simple' data-original-title='' title=''><i class='material-icons'>close</i></button></td></tr>");
 
 
-                            document.getElementById("subtotalt").innerHTML = data.Gastos[0].subtotalt;
+                            document.getElementById("subtotalt").innerHTML = data.Gastos[0].subtotalt;4
                             document.getElementById("itbist").innerHTML = data.Gastos[0].itbist;
                             document.getElementById("suma_totalt").innerHTML = data.Gastos[0].suma_totalt;
                                                                               
@@ -407,7 +407,8 @@
 
 
                             function Remove(id) {
-                                                         
+                                           
+                                           alert(id);              
                                            console.log(id);
 
                                            
