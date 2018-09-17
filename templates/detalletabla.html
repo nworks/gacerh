@@ -408,8 +408,9 @@
 
                             function Remove(id) {
                                                          
-                                           
+                                           console.log(id);
 
+                                           
 
                                            $.ajax({
                                                             data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
