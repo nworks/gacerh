@@ -143,6 +143,7 @@ def removergasto(request):
 
 def removerdetalle(request, id=None):
 	idview = request.POST.get('id')
+	idview.replace(",", "")
 	print idview
 	gasto = Detalleg.objects.get(id=idview)
 	gasto.delete()
