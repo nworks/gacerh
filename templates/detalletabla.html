@@ -411,7 +411,7 @@
                                            console.log(numero);
 
                                            var id = String(numero);
-                                           console.log(id.replace(",", ''));
+                                           console.log(id.replace(/,/g, ''));
 
 
                                            $.ajax({
