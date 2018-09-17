@@ -141,7 +141,7 @@ def removergasto(request):
 	return render(request, 'gastotabla.html')
 
 
-def removerdetalle(request, id=None):
+def removerdetalle(request):
 	idview = request.POST.get('id')
 	idview.replace(",", "")
 	print idview
