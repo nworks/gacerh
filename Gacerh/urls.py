@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from users.views import LoginRequest,LogoutRequest,register2,export_excel,user_detail,export_excel2,activate,active,user_edit
-from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto,past, novedadesreg
+from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto,past, novedadesreg, email
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/',LoginRequest ),
+    url(r'^email/',email ),
     url(r'logout/', LogoutRequest, name="logout"),
     url(r'^$',LoginRequest ),
     url(r'register/$', register2, name="register"),

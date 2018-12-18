@@ -14,9 +14,12 @@ from .forms import fechaform
 from django.shortcuts import render
 from ncf.models import Gasto, Detalleg
 import datetime
+from django.core.mail.message import EmailMessage
+
+
 # Create your views here.
 def compania(request):
-	gasto = Gasto.objects.filter(comprador=request.user);
+	gasto = Gasto.objects.filter(comprador=request.user).order_by('-id');
 	return render(request, 'gastotabla.html',{'gasto':gasto, 'gastos':gasto.all()})
 
 def PDF(request, id=None):
@@ -240,6 +243,16 @@ def cerrargasto(request):
 	gasto = Gasto.objects.get(id=idview);
 	gasto.estatus = "CERRADO"
 	gasto.save()
+	
+	correo = EmailMessage()
+	correo.subject = " Reporte de Gastos ACERH"
+	correo.body = """Hola Administrador,
+	El usuario """+ gasto.comprador.username +','+ gasto.comprador.first_name + ' ' + gasto.comprador.last_name +""", acaba de finalizar el reporte """+ gasto.referencia + """ de un monto total de """+ str(gasto.total_final) + """
+	Notificaciones de Gastos ACERH """
+	correo.to = ['controlinterno@acerhcaribe.com']
+	correo.send()
+
+
 	return render(request, 'adming.html',{'gasto':gasto})
 
 
@@ -253,99 +266,99 @@ def range_date(request):
 
 
 def export_excelfecha(request, mes, ano):
-    #Llamada a la libreria para escribir en bits
-    output = io.BytesIO()
+	#Llamada a la libreria para escribir en bits
+	output = io.BytesIO()
 
-    #Se inicializa el workbook de excel en cache
-    workbook = Workbook(output, {'in_memory': True})
-    worksheet = workbook.add_worksheet()
+	#Se inicializa el workbook de excel en cache
+	workbook = Workbook(output, {'in_memory': True})
+	worksheet = workbook.add_worksheet()
 
-    #se setea la variable cell con 8 para que empieze a escribir desde la celda 8
-    cell = 1
-    #ciclo que busca todos los objetos con estatus 195(por enviar) para ser escritos en el excel
-    hoy = datetime.date.today()
-    print hoy
-    gasto1 = Gasto.objects.filter(fecha__year=int(ano)).filter(fecha__month=int(mes)).values_list('id', flat=True)
-    print gasto1
-    gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
-
-
-
-
-    for obj in gasto2:
-    	gasto3 = Gasto.objects.get(id=obj.gasto.id)
-    	#indica desde que celda se escribe el titulo de los id de los objetos
-    	worksheet.write_string(cell,0, str(obj.id))
-    	#indica desde que celda se escribiran los emails
-    	worksheet.write_string(cell,1, obj.rnc)
-    	#indica desde que celda se escribiran los codigos de pss
-    	worksheet.write_string(cell,2, str(obj.ncf))
-    	#indica desde que celda se escribiran la ruta de los archivos
-    	worksheet.write_string(cell,3, obj.fecha)
-    	#escribre el username
-    	worksheet.write_string(cell,4, obj.detalle)
-
-    	worksheet.write_string(cell,5, str(obj.subtotal))
-
-    	worksheet.write_string(cell,6, str(obj.itbis))
-
-    	worksheet.write_string(cell,7, str(obj.total))
-
-    	worksheet.write_string(cell,8, obj.estatus)
-
-    	worksheet.write_string(cell,9, gasto3.comprador.username)
-
-    	worksheet.write_string(cell,10, gasto3.referencia)
-
-    	#Se realiza el aumento de la celda para seguir escribiendo hacia abajo
-    	cell = cell + 1
+	#se setea la variable cell con 8 para que empieze a escribir desde la celda 8
+	cell = 1
+	#ciclo que busca todos los objetos con estatus 195(por enviar) para ser escritos en el excel
+	hoy = datetime.date.today()
+	print hoy
+	gasto1 = Gasto.objects.filter(fecha__year=int(ano)).filter(fecha__month=int(mes)).values_list('id', flat=True)
+	print gasto1
+	gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
 
 
 
 
-    #Variable que define el estilo de negrita
-    bold = workbook.add_format({'bold': 1}) #letra negrita
-    #Variable que define el tamanio de las letras
-    size = workbook.add_format({'font_size': 20})
-    #Define el color rojo de las celdas
-    green = workbook.add_format({'bg_color': 'red', 'bold': 1})
-    #Escriben los enunciados del reporte de excel y ejecuta el logo
-    worksheet.set_column('A:A', 5)
-    worksheet.write('A1', 'ID',green)
-    worksheet.set_column('B:B', 20)
-    worksheet.write('B1', 'rnc',green)
-    worksheet.set_column('C:C', 20)
-    worksheet.write('C1', 'ncf',green)
-    worksheet.set_column('D:D', 10)
-    worksheet.write('D1', 'fecha',green)
-    worksheet.set_column('E:E', 50)
-    worksheet.write('E1', 'detalle',green)
-    worksheet.set_column('F:F', 20)
-    worksheet.write('F1', 'subtotal',green)
-    worksheet.set_column('G:G', 20)
-    worksheet.write('G1', 'itbis',green)
-    worksheet.set_column('H:H', 20)
-    worksheet.write('H1', 'total',green)
-    worksheet.set_column('I:I', 20)
-    worksheet.write('I1', 'estatus',green)
-    worksheet.set_column('J:J', 20)
-    worksheet.write('J1', 'usuario',green)
-    worksheet.set_column('K:K', 20)
-    worksheet.write('K1', 'referencia',green)
+	for obj in gasto2:
+		gasto3 = Gasto.objects.get(id=obj.gasto.id)
+		#indica desde que celda se escribe el titulo de los id de los objetos
+		worksheet.write_string(cell,0, str(obj.id))
+		#indica desde que celda se escribiran los emails
+		worksheet.write_string(cell,1, obj.rnc)
+		#indica desde que celda se escribiran los codigos de pss
+		worksheet.write_string(cell,2, str(obj.ncf))
+		#indica desde que celda se escribiran la ruta de los archivos
+		worksheet.write_string(cell,3, obj.fecha)
+		#escribre el username
+		worksheet.write_string(cell,4, obj.detalle)
+
+		worksheet.write_string(cell,5, str(obj.subtotal))
+
+		worksheet.write_string(cell,6, str(obj.itbis))
+
+		worksheet.write_string(cell,7, str(obj.total))
+
+		worksheet.write_string(cell,8, obj.estatus)
+
+		worksheet.write_string(cell,9, gasto3.comprador.username)
+
+		worksheet.write_string(cell,10, gasto3.referencia)
+
+		#Se realiza el aumento de la celda para seguir escribiendo hacia abajo
+		cell = cell + 1
 
 
 
-    #worksheet.add_table('B3:F7') #TABLA
-    #Cierra el workbook del excel para ser guardado
-    workbook.close()
 
-    output.seek(0)
-    #response que contiene el archivo xlsx que sera devuelto a la ventana del navegador
-    response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    response['Content-Disposition'] = "attachment; filename=PagoReport.xlsx"
+	#Variable que define el estilo de negrita
+	bold = workbook.add_format({'bold': 1}) #letra negrita
+	#Variable que define el tamanio de las letras
+	size = workbook.add_format({'font_size': 20})
+	#Define el color rojo de las celdas
+	green = workbook.add_format({'bg_color': 'red', 'bold': 1})
+	#Escriben los enunciados del reporte de excel y ejecuta el logo
+	worksheet.set_column('A:A', 5)
+	worksheet.write('A1', 'ID',green)
+	worksheet.set_column('B:B', 20)
+	worksheet.write('B1', 'rnc',green)
+	worksheet.set_column('C:C', 20)
+	worksheet.write('C1', 'ncf',green)
+	worksheet.set_column('D:D', 10)
+	worksheet.write('D1', 'fecha',green)
+	worksheet.set_column('E:E', 50)
+	worksheet.write('E1', 'detalle',green)
+	worksheet.set_column('F:F', 20)
+	worksheet.write('F1', 'subtotal',green)
+	worksheet.set_column('G:G', 20)
+	worksheet.write('G1', 'itbis',green)
+	worksheet.set_column('H:H', 20)
+	worksheet.write('H1', 'total',green)
+	worksheet.set_column('I:I', 20)
+	worksheet.write('I1', 'estatus',green)
+	worksheet.set_column('J:J', 20)
+	worksheet.write('J1', 'usuario',green)
+	worksheet.set_column('K:K', 20)
+	worksheet.write('K1', 'referencia',green)
 
-    #funcion de retorno
-    return response
+
+
+	#worksheet.add_table('B3:F7') #TABLA
+	#Cierra el workbook del excel para ser guardado
+	workbook.close()
+
+	output.seek(0)
+	#response que contiene el archivo xlsx que sera devuelto a la ventana del navegador
+	response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	response['Content-Disposition'] = "attachment; filename=PagoReport.xlsx"
+
+	#funcion de retorno
+	return response
 	
 
 
@@ -356,3 +369,11 @@ def novedadesreg (request, id=None):
 
 	
 	return render(request, 'novedadesregistro.html',{'main':main})
+
+
+def email(request):
+	email = EmailMessage()
+	email.subject = "Hola mensaje de prueba desde el servidor de acerh"
+	email.body = "Coneccion totalmente lograda, prueba test #2"
+	email.to = [ "nworks16@gmail.com"]
+	email.send()

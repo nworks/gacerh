@@ -165,7 +165,7 @@
                                                         </button>
                                                     </td>
 
-                                                    <td colspan="2"></td>
+                                                    <td colspan="1"></td>
                                                     <td class="td-total">
                                                         Subtotal
                                                     </td>
@@ -413,8 +413,17 @@
                                            console.log(id);
 
                                            
+                                         swal({
+                                         title: "Estas Seguro?",
+                                         text: "Estas a punto de eliminar este detalle de gasto!",
+                                         icon: "warning",
+                                         buttons: true,
+                                         dangerMode: true,
+                                       })
+                                       .then((willDelete) => {
+                                         if (willDelete) {
 
-                                           $.ajax({
+                                             $.ajax({
                                                             data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
                                                             url: '{% url 'removerdetalle'  %}',
                                                             type: 'POST',
@@ -426,8 +435,17 @@
                                                             }
                                                              });
 
-                                                        
-                                                         }
+                                                         
+                                           swal("El detalle fue eliminado exitosamente", {
+                                             icon: "success",
+                                           });
+                                         } else {
+                                           swal("Se cancelo la operacion!");
+                                         }
+                                       });
+                                   }
+
+                                          
 
 
                         function Cerrar(id) {

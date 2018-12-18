@@ -16,6 +16,7 @@ import io
 import os
 from datetime import datetime
 import datetime
+from django.core.mail.message import EmailMessage
 # Create your views here.
 
 def user_detail(request):
@@ -171,6 +172,22 @@ def active(request):
 	user2 = User.objects.get(id=id)
 	user2.is_active=1
 	user2.save()
+
+	print 'usuario activado'
+
+	correo = EmailMessage()
+	correo.subject = "Confirmación de acceso Portal Gastos"
+	correo.body = """¡Bienvenido!
+    Su solicitud fue confirmada. Ya puede ingresar al portal y registrar sus gastos, compras o
+    consumos de tarjeta.
+    Siempre a la orden.
+    Equipo ACERH """
+	correo.to = [user2.email]
+	correo.send()
+
+
+    
+
 	user = User.objects.filter(is_active=0)
 	return render (request,'activate.html',{'user':user, 'users':user.all()})
 
@@ -202,6 +219,33 @@ def register2(request):
 		profile.save()
 
 		print("perfil creado")
+
+		print("preparando correo")
+
+		correo = EmailMessage()
+		correo.subject = "Solicitud acceso Gastos ACERH"
+		correo.body = """Hola """+ nombres + ' ' + apellidos +""",
+        Hemos recibido tu solicitud de acceso a nuestro portal de gastos, tan pronto nuestro
+        equipo de gestores o el administrador valide la información enviada, te notificamos
+        nuevamente confirmando o rechazando tu solicitud.
+        Recordando que tu usuario es: """ + codigo + """ y la contraseña es: """+ password +""".
+        Gracias por utilizar nuestros servicios.
+        Equipo ACERH """
+		correo.to = [email]
+		correo.send()
+
+		correo = EmailMessage()
+		correo.subject = "Solicitud acceso Gastos ACERH"
+		correo.body = """Hola Administrador,
+        Tienes una solicitud de acceso en el Portal de Gastos ACERH.
+        Usuario:"""+ codigo + """
+        Nombre:"""+ nombres + ' ' + apellidos +"""
+        Email:"""+ email +""" 
+        Empresa:"""+ empresa + """ """
+		correo.to = ['controlinterno@acerhcaribe.com']
+		correo.send()
+
+		print("correo enviado")
 		return render (request,'register.html')
 	else:
 

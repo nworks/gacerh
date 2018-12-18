@@ -136,3 +136,13 @@ MEDIA_URL = '/media/'
 
 # LOGIN
 LOGIN_URL = '/login/'
+
+
+#campos para el emaling por correo banreservas 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.acerhempleos.com'
+EMAIL_HOST_USER = 'notificacion@acerhrd.com'
+EMAIL_HOST_PASSWORD = 'acerh2018'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'ACERH <notificacion@acerhrd.com>'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

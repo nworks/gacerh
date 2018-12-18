@@ -133,7 +133,17 @@
                                          console.log(id);
 
 
-                                         $.ajax({
+                                         swal({
+                                         title: "Estas Seguro?",
+                                         text: "Estas a punto de eliminar este gasto!",
+                                         icon: "warning",
+                                         buttons: true,
+                                         dangerMode: true,
+                                       })
+                                       .then((willDelete) => {
+                                         if (willDelete) {
+
+                                            $.ajax({
                                                           data: { csrfmiddlewaretoken: '{{ csrf_token }}','id':id},
                                                           url: '{% url 'removergasto'  %}',
                                                           type: 'POST',
@@ -145,7 +155,14 @@
                                                           }
                                                            });
 
-                                                      
+                                                         
+                                           swal("El gasto fue eliminado exitosamente", {
+                                             icon: "success",
+                                           });
+                                         } else {
+                                           swal("Se cancelo la operacion!");
+                                         }
+                                       });
                                                        }                               
                         </script>
 
