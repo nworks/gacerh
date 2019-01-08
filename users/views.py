@@ -206,7 +206,7 @@ def register2(request):
 		celular = request.POST.get('celular')
 		supervisor = request.POST.get('supervisor')
 		sup_email = request.POST.get('sup_email')
-		sup_level2 = '1'
+		sup_level2 = 'na'
 
 		newuser = User.objects.create(first_name= nombres, last_name= apellidos, username = codigo,email=email)
 		newuser.is_active = False
@@ -216,7 +216,7 @@ def register2(request):
 
 		print("usuario creado")
 
-		profile = UserP.objects.create(user = newuser ,cedula= cedula, empresa=empresa, puesto=puesto,  telefono=telefono, celular=celular,supervisor=supervisor,email_super=sup_email,sup_level=sup_level2)
+		profile = UserP.objects.create(user = newuser ,cedula= cedula, empresa=empresa, puesto=puesto,  telefono=telefono, celular=celular,supervisor=supervisor,email_super=sup_email)
 		profile.save()
 
 		print("perfil creado")
