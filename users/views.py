@@ -206,6 +206,7 @@ def register2(request):
 		celular = request.POST.get('celular')
 		supervisor = request.POST.get('supervisor')
 		sup_email = request.POST.get('sup_email')
+		sup_level = '1'
 
 		newuser = User.objects.create(first_name= nombres, last_name= apellidos, username = codigo,email=email)
 		newuser.is_active = False
