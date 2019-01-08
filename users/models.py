@@ -6,15 +6,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
 
-class Area(models.Model):
-	nombre = models.CharField(max_length=100, blank=True)
-	supervisor = models.CharField(max_length=20, blank=True)
-
-	def __unicode__(self):
-		return self.nombre
-
-
-
 class NominaDetalle(models.Model):
 	idacerh = models.CharField(max_length=99999999, blank=True)
 	idnomina = models.CharField(max_length=99999999, blank=True)

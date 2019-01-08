@@ -28,7 +28,7 @@ def PDF(request, id=None):
 	itbis = Detalleg.objects.filter(gasto=gastog).aggregate(Sum('itbis'))['itbis__sum']
 	suma_total = Detalleg.objects.filter(gasto=gastog).aggregate(Sum('total'))['total__sum']
 	subtotal = Detalleg.objects.filter(gasto=gastog).aggregate(Sum('subtotal'))['subtotal__sum']
-	return render(request, 'PDF.html',{'gasto':gasto, 'gastos':gasto.all(),'subtotal':subtotal,'itbis':itbis,'suma_total':suma_total})
+	return render(request, 'PDF.html',{'gasto':gasto, 'gastos':gasto.all(),'subtotal':subtotal,'itbis':itbis,'suma_total':suma_total,'gastog':gastog})
 
 def newgasto(request):
 	gasto = Detalleg.objects.filter(gasto=1);

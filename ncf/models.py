@@ -8,7 +8,6 @@ def upload_location(instancia, filename):
 	return "CV/%s/%s" %(instancia.id, filename)
 
 # Create your models here.
-# Create your models here.
 class Gasto(models.Model):
 	numero = models.CharField(max_length=999999)
 	referencia = models.CharField(max_length=100, blank=True)
