@@ -35,7 +35,7 @@ def newgasto(request):
 	return render(request, 'vacantetabla0.html',{'gasto':gasto, 'gastos':gasto.all()})
 
 def gastodetalle (request, id=None):
-	idview = id
+	idview = id.replace(",", "")
 	print id
 	main =  Gasto.objects.get(id=id);
 	gasto = Detalleg.objects.filter(gasto=idview);
@@ -73,7 +73,7 @@ def detalleadmin (request, id=None):
 	return render(request, 'detalleadmin.html',{'subtotal':subtotal,'main':main,'itbis':itbis,'suma_total':suma_total,'gasto':gasto, 'gastos':gasto.all()})
 
 def creargasto (request):
-	id = request.POST.get('id')
+	id = request.POST.get('id').replace(",", "")
 	print id
 	rnc = request.POST.get('rnc')
 	print rnc
@@ -137,7 +137,7 @@ def creargastobase (request):
 
 
 def removergasto(request):
-	idview = request.POST.get('id')
+	idview = request.POST.get('id').replace(",", "")
 	print idview
 	gasto = Gasto.objects.get(id=idview , comprador=request.user)
 	gasto.delete()
@@ -194,7 +194,7 @@ def past(request):
 
 
 def pay(request):
-	idview = request.POST.get('id')
+	idview = request.POST.get('id').replace(',', '')
 	print idview
 	print "entro al pago"
 	gasto = Detalleg.objects.get(id=idview);
@@ -221,7 +221,7 @@ def reabierto(request,id=None):
 
 
 def paygasto(request):
-	idview = request.POST.get('id')
+	idview = request.POST.get('id').replace(',', '')
 	print idview
 	print "entro al pago"
 	gasto = Gasto.objects.get(id=idview);
@@ -237,7 +237,7 @@ def paygasto(request):
 
 
 def cerrargasto(request):
-	idview = request.POST.get('id')
+	idview = request.POST.get('id').replace(',', '')
 	print idview
 	print "Cerrando gasto"
 	gasto = Gasto.objects.get(id=idview);
