@@ -1,6 +1,6 @@
 {% extends 'nucleo.html' %}
 {% load staticfiles %}
-
+{% load l10n %}
 {% block content %}
 <div class="col-md-12">
                             <div class="card">
@@ -36,7 +36,7 @@
                                               {% for gasto in gastos %}
                                                 <tr>
 
-                                                    <td>{{gasto.id}}</td>
+                                                    <td>{{gasto.id  | unlocalize}}</td>
                                                     <td>{{gasto.comprador.username}}</td>
                                                     <td>{{gasto.rnc}}</td>
                                                     <td>{{gasto.ncf}}</td>
