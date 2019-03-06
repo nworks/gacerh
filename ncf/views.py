@@ -205,7 +205,7 @@ def pay(request):
 
 
 def reabierto(request,id=None):
-	idview = id
+	idview = id.replace(',', '')
 	print idview
 	print "abriendo gasto de nuevo"
 	gasto = Gasto.objects.get(id=idview);
