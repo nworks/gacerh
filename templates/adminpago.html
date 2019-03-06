@@ -63,20 +63,20 @@
                                                     </td>
                                                     <td class="td-actions text-right">
                                                         {% if gasto.estatus != "PROCESADO" %}
-                                                        <button type="button"  rel="tooltip" class="btn btn-info " onclick="Pay({{gasto.id}})">
+                                                        <button type="button"  rel="tooltip" class="btn btn-info " onclick="Pay({{gasto.id | unlocalize}})">
                                                             <i class="material-icons">monetization_on</i>
                                                         </button>
                                                         <a href="/detalleadmin/{{gasto.id}}"><button type="button"  rel="tooltip" class="btn btn-warning " >
                                                             <i class="material-icons"><i class="material-icons">remove_red_eye</i></i>
                                                         </button></a>
                                                         
-                                                       <a href="{% url 'reopen' id=gasto.id %}">
+                                                       <a href="{% url 'reopen' id=gasto.id  %}">
                                                        <button type="button"  rel="tooltip" class="btn btn-danger " data-original-title="" title="">
                                                             <i class="material-icons">close</i>
                                                         </button></a>
                                                         </button>
                                                          {% elif gasto.estatus == "PROCESADO" %}
-                                                         <a href="/detalleadmin/{{gasto.id}}"><button type="button"  rel="tooltip" class="btn btn-warning " >
+                                                         <a href="/detalleadmin/{{gasto.id }}"><button type="button"  rel="tooltip" class="btn btn-warning " >
                                                             <i class="material-icons"><i class="material-icons">remove_red_eye</i></i>
                                                         </button></a>
                                                         <a href="{% url 'reopen' id=gasto.id %}">
@@ -96,7 +96,7 @@
                                                     <div class="modal-content">
                                                       <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <div style="text-align: center"><h4 class="modal-title"> Modulo de pago #{{gasto.id}}</h4></div>
+                                                        <div style="text-align: center"><h4 class="modal-title"> Modulo de pago #{{gasto.id | unlocalize}}</h4></div>
                                                       </div>
                                                       <div class="modal-body">
                                                         
