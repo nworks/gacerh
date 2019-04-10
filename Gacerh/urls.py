@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from users.views import LoginRequest,LogoutRequest,register2,export_excel,user_detail,export_excel2,activate,active,user_edit
-from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto,past, novedadesreg, email
+from ncf.views import compania, newgasto, gastodetalle,creargasto,creargastobase,removergasto,removerdetalle,admintable,pay,cerrargasto,pagos,paygasto,detalleadmin,range_date,PDF,reabierto,past, novedadesreg, email,future,busca_usuario
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^admintable/',admintable, name="admintable" ),
     url(r'^pagos/',pagos, name="pagos" ),
     url(r'^pagospast/',past, name="pagospast" ),
+    url(r'^pagosfuture/',future, name="pagosfuture" ),
     url(r'^pay/',pay, name="pay" ),
     url(r'^paygasto/',paygasto, name="paygasto" ),
     url(r'^cerrargasto/',cerrargasto, name="cerrargasto" ),
@@ -49,6 +50,8 @@ urlpatterns = [
     url(r'^range_date/$', range_date ,name="range_date"),
     url(r'^user_edit/$', user_edit ,name="user_edit"),
     url(r'^PDF2/$', PDF ,name="PDF"),
+    url(r'^busca_usuario/$', busca_usuario ,name="busca_usuario"),
+    
     url(r'^PDF/(?P<id>\d+)/$',PDF, name="PDF"),
     url(r'^reopen/(?P<id>\d+)/$',reabierto, name="reopen"),
     url(r'^novedades/',novedadesreg, name="novedadesreg"),

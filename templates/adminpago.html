@@ -9,11 +9,16 @@
                                 </div>
                                 <div class="card-content">
                                     <h4 class="card-title">Administrador de Pagos</h4>
+                                     <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Buscar <i class="material-icons">search</i></button>
                                     <a href="{% url 'export_excel2' %}"><button type="button" class="btn btn-danger btn-block"><i class="material-icons">cloud_download</i>Exportar</button></a>
 
                                   <a href="{% url 'pagospast' %}">
                                                        <button type="button"  rel="tooltip" class="btn btn-danger " data-original-title="" title="">
-                                                            <i class="material-icons">reply</i>
+                                                            <i class="material-icons">undo</i>
+                                                        </button></a>
+                                  <a href="{% url 'pagosfuture' %}">
+                                                       <button type="button"  rel="tooltip" class="btn btn-danger " data-original-title="" title="">
+                                                            <i class="material-icons">redo</i>
                                                         </button></a>
 
 
@@ -124,26 +129,34 @@
                                 </form>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Iniciar Busqueda</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><div>Modulo de busqueda</div></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form method="POST" action="/pagos/" id="searchform">{% csrf_token %}
+                                    <h4 class="card-title">Usuario</h4>
+                                    <input name="usuario" id="usuario"  placeholder="000000" type="text"  class="form-control" >
+                                    
+                                  </div>
+                                    
+                                   
+                                  <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger" >Buscar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                     </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
 
 
 
@@ -170,6 +183,29 @@
                                                              });
 
                                                         
+                                                         }
+
+                           function search() {
+
+                                           var usuario = document.getElementById("usuario").value;
+                                          
+                                           console.log(fechaini);
+                                           console.log(fechafin);
+
+
+                                           $.ajax({
+                                                            data: { csrfmiddlewaretoken: '{{ csrf_token }}','usuario':usuario},
+                                                            url: '{% url 'range_date'  %}',
+                                                            type: 'POST',
+                                                            success : function(data) {
+                                                                   
+                                                                               },
+                                                            error : function(message) {
+                                                                   console.log(message);
+                                                            }
+                                                             });
+
+
                                                          }
                         </script>
 

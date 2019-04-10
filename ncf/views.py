@@ -13,6 +13,7 @@ from datetime import datetime
 from .forms import fechaform
 from django.shortcuts import render
 from ncf.models import Gasto, Detalleg
+from django.contrib.auth.models import User
 import datetime
 from django.core.mail.message import EmailMessage
 
@@ -158,7 +159,7 @@ def admintable(request):
 		ano = request.POST.get('ano')
 		print "entro al form"
 		gasto1 = Gasto.objects.filter(fecha__year=int(ano)).filter(fecha__month=int(mes)).values_list('id', flat=True)
-		gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
+		gasto2 = Detalleg.objects.filter(gasto__in=gasto1)[:100]
 		return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
 
 	elif request.method == 'GET':
@@ -171,7 +172,7 @@ def admintable(request):
 			print today
 			gasto1 = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month).values_list('id', flat=True)
 			print gasto1
-			gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
+			gasto2 = Detalleg.objects.filter(gasto__in=gasto1)[:100]
 			return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
 		else:
 			return export_excelfecha(request, mes, ano)
@@ -182,14 +183,34 @@ def admintable(request):
 
 
 def pagos(request):
-	today = datetime.date.today()
-	gasto = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month)
-	return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
+	if request.method == 'POST':
+		try:
+			usuario = request.POST.get('usuario')
+			
+			usuario2 = User.objects.get(username=usuario)
+			print "el usuario"
+			print usuario2
+			gasto = Gasto.objects.filter(comprador=usuario2)[:100]
+		except Exception as e:
+			print e
+			gasto = Gasto.objects.all()[:100]
+					
+
+		return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
+	else:
+		today = datetime.date.today()
+		gasto = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month)
+		return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
 
 
 def past(request):
 	today = datetime.date.today()
 	gasto = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month-1)
+	return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
+
+def future(request):
+	today = datetime.date.today()
+	gasto = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month+1)
 	return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
 
 
@@ -260,6 +281,14 @@ def range_date(request):
 	fechaini = request.POST.get('fechaini')
 	fechafin = request.POST.get('fechafin')
 	gasto = Gasto.objects.filter(fecha__range=[fechaini, fechafin])
+	print "fechas"
+	print gasto
+	return render(request, 'adming2.html',{'gasto':gasto, 'gastos':gasto.all()})
+
+
+def busca_usuario(request):
+	usuario = request.POST.get('usuario')
+	gasto = Gasto.objects.filter(comprador=usuario)
 	print "fechas"
 	print gasto
 	return render(request, 'adming2.html',{'gasto':gasto, 'gastos':gasto.all()})

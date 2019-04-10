@@ -134,7 +134,7 @@
                                                     <td><input style="width: 150px" id="ncf" type="text" maxlength="19" maxlength="19" ></td>
                                                     <td class="text-left"><div class="form-group">
                                                         <div class='input-group date' id='datetimepicker1'>
-                                                            <input style="width: 80px"  class="form-control datepicker" maxlength="10" type='text'  id="fecha"  />
+                                                            <input style="width: 80px"  class="datepicker" maxlength="10" type='text'  id="fecha"  />
                                                             
                                                         </div>
                                                     </div></td>
@@ -243,8 +243,22 @@
                                            var itbis = document.getElementById("itbis").value;
                                            var total = document.getElementById("total").value;
 
+                                           console.log("limpiando");
+                                           limpia();
+
+
+                                           
                                             if (rnc.length < 8 || rnc.length > 11) {
                                                $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
+                                               estatus = false;
+                                
+                                            }
+                                            else{
+                                                estatus = true;
+                                            }
+
+                                            if (fecha.length < 1 || fecha.length > 11) {
+                                               $.toaster({ priority : 'danger', title : 'Error Fecha', message : 'Fecha no valida'});
                                                estatus = false;
                                 
                                             }
@@ -339,6 +353,9 @@
                                            var itbis = document.getElementById("itbis").value;
                                            var total = document.getElementById("total").value;
 
+
+
+
                                             if (rnc.length < 8 || rnc.length > 11) {
                                                $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
                                               // swal("Good job!", "You clicked the button!", "success");
@@ -399,7 +416,15 @@
                                                              });
 
                                                         
-                                                         }
+                                           var id = document.getElementById("id").value;
+                                          
+                                           
+                                         }
+
+
+                                           
+                                           
+
                                             }
 
 
@@ -489,6 +514,33 @@
                                        });
 
  }
+
+ function limpia()
+{
+    document.getElementById("fecha").value = '';
+    
+    document.getElementById("sel1").value = '';
+    
+
+    console.log(fecha);
+
+    
+
+    document.getElementById("rnc")..value = '';
+    
+    console.log(rnc);
+     console.log(sel1);
+    document.getElementById("ncf").value = '';
+    
+    
+    document.getElementById("detalle").value = '';
+    
+    
+    document.getElementById("itbis").value = '';
+    
+    document.getElementById("total").value = '';
+
+}
                                        
 
 
