@@ -16,7 +16,8 @@ from ncf.models import Gasto, Detalleg
 from django.contrib.auth.models import User
 import datetime
 from django.core.mail.message import EmailMessage
-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def compania(request):
@@ -63,6 +64,13 @@ def detalleadmin (request, id=None):
 	itbis = Detalleg.objects.filter(gasto=idview).aggregate(Sum('itbis'))['itbis__sum']
 	suma_total = Detalleg.objects.filter(gasto=idview).aggregate(Sum('total'))['total__sum']
 	subtotal = Detalleg.objects.filter(gasto=idview).aggregate(Sum('subtotal'))['subtotal__sum']
+	usuario = main.comprador
+	referencia = main.referencia
+	user = User.objects.get(username=main.comprador)
+	nombre_p = user.first_name
+	nombre_s = user.last_name
+	username = user.username
+
 	if suma_total is not None:
 		main.total_final = suma_total
 		main.save()
@@ -71,7 +79,7 @@ def detalleadmin (request, id=None):
 		main.save()
 		print "suma igual cero"
 	print "cambiando de pagina"
-	return render(request, 'detalleadmin.html',{'subtotal':subtotal,'main':main,'itbis':itbis,'suma_total':suma_total,'gasto':gasto, 'gastos':gasto.all()})
+	return render(request, 'detalleadmin.html',{'subtotal':subtotal,'main':main,'itbis':itbis,'suma_total':suma_total,'gasto':gasto, 'gastos':gasto.all(), 'usuario':usuario,'nombre_p':nombre_p,'nombre_s':nombre_s, 'referencia':referencia, 'username':username})
 
 def creargasto (request):
 	id = request.POST.get('id').replace(",", "")
@@ -153,6 +161,8 @@ def removerdetalle(request):
 	gasto.delete()
 	return render(request, 'detalletabla.html')
 
+
+@staff_member_required
 def admintable(request):
 	if request.method == 'POST':
 		mes = request.POST.get('mes')
@@ -170,10 +180,23 @@ def admintable(request):
 		if mes == None:
 			today = datetime.date.today()
 			print today
-			gasto1 = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month).values_list('id', flat=True)
+			gasto1 = Gasto.objects.filter().values_list('id', flat=True)
+			pagastos = Detalleg.objects.filter(gasto__in=gasto1).order_by('-fecha')
+
+			paginator = Paginator(pagastos, 50) # Show 25 contacts per page
+
+			page = request.GET.get('page')
+			try:
+				posts = paginator.page(page)
+			except PageNotAnInteger:
+				# If page is not an integer, deliver first page.
+				posts = paginator.page(1)
+			except EmptyPage:
+				# If page is out of range (e.g. 9999), deliver last page of results.
+				posts = paginator.page(paginator.num_pages)
 			print gasto1
-			gasto2 = Detalleg.objects.filter(gasto__in=gasto1)[:100]
-			return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
+			gasto2 = Detalleg.objects.filter(gasto__in=gasto1)
+			return render(request, 'adming.html',{'gasto':gasto2, 'posts':posts,'gastos':gasto2.all()})
 		else:
 			return export_excelfecha(request, mes, ano)
 		
@@ -181,7 +204,7 @@ def admintable(request):
 		
 
 
-
+@staff_member_required
 def pagos(request):
 	if request.method == 'POST':
 		try:
@@ -198,9 +221,24 @@ def pagos(request):
 
 		return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
 	else:
+		
+		pagastos = Gasto.objects.all().order_by('-fecha')
+
+		paginator = Paginator(pagastos, 50) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			posts = paginator.page(page)
+		except PageNotAnInteger:
+			# If page is not an integer, deliver first page.
+			posts = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			posts = paginator.page(paginator.num_pages)
+
 		today = datetime.date.today()
 		gasto = Gasto.objects.filter(fecha__year=today.year).filter(fecha__month=today.month)
-		return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
+		return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all(),'posts':posts})
 
 
 def past(request):

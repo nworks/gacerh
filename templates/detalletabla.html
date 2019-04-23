@@ -218,11 +218,7 @@
 
 
 
-                        	 function Edit() {
-
-
-
-                                
+                        	 function Edit() {                             
                                                          
                                            console.log("Entro al Update");
                                            var id = document.getElementById("id").value;
@@ -248,57 +244,49 @@
 
 
                                            
-                                            if (rnc.length < 8 || rnc.length > 11) {
+                                            if (rnc.length < 8 && rnc.length > 11 && rnc != "" ) {
                                                $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
                                                estatus = false;
                                 
                                             }
-                                            else{
-                                                estatus = true;
-                                            }
 
-                                            if (fecha.length < 1 || fecha.length > 11) {
+                                            else if (rnc == '101852925') {
+                                               $.toaster({ priority : 'danger', title : 'Error RNC', message : 'No puedes usar nuestro RNC'});
+                                               estatus = false;
+                                
+                                            }
+                                            
+
+                                            else if(fecha.length < 1 || fecha.length > 11) {
                                                $.toaster({ priority : 'danger', title : 'Error Fecha', message : 'Fecha no valida'});
                                                estatus = false;
                                 
                                             }
-                                            else{
-                                                estatus = true;
-                                            }
-
-                                            if (ncf.length < 11 || ncf.length > 19) {
+                                            
+                                            else if (ncf.length < 10 && ncf.length > 12 && ncf != "" ) {
                                                 $.toaster({ priority : 'danger', title : 'Error NCF', message : 'ncf no valido'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
+                                            
 
-                                             if (fecha == "") {
+                                             else if (fecha == "") {
                                                 $.toaster({ priority : 'danger', title : 'Error FECHA', message : 'Fecha no puede estar vacia'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
-
-                                             if (itbis == "") {
+                                            
+                                             else if (itbis == "") {
                                                 $.toaster({ priority : 'danger', title : 'Error ITBIS', message : 'itbis no puede estar vacio'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
+                                            
 
-                                             if (total == "") {
+                                             else if (total == "") {
                                                 $.toaster({ priority : 'danger', title : 'Error TOTAL', message : 'Total no puede estar vacio'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
+                                            
 
-                                            if(estatus == true){
+                                            else{
 
                                            $.ajax({
                                                             data: { csrfmiddlewaretoken: '{{ csrf_token }}', 'rnc':rnc,'ncf':ncf,'detalle':detalle,
@@ -356,48 +344,47 @@
 
 
 
-                                            if (rnc.length < 8 || rnc.length > 11) {
+                                            if (rnc.length < 8 || rnc.length > 11 && rnc != "" ) {
                                                $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
-                                              // swal("Good job!", "You clicked the button!", "success");
                                                estatus = false;
                                 
                                             }
-                                            else{
-                                                estatus = true;
-                                            }
 
-                                            if (ncf.length < 11 || ncf.length > 19) {
+                                            else if (rnc == '101852925') {
+                                               $.toaster({ priority : 'danger', title : 'Error RNC', message : 'No puedes usar nuestro RNC'});
+                                               estatus = false;
+                                
+                                            }
+                                            
+
+                                            else if(fecha.length < 1 || fecha.length > 11) {
+                                               $.toaster({ priority : 'danger', title : 'Error Fecha', message : 'Fecha no valida'});
+                                               estatus = false;
+                                
+                                            }
+                                            
+                                            else if (ncf.length < 10 || ncf.length > 12 && ncf != "" ) {
                                                 $.toaster({ priority : 'danger', title : 'Error NCF', message : 'ncf no valido'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
+                                            
 
-                                             if (fecha == "") {
+                                             else if (fecha == "") {
                                                 $.toaster({ priority : 'danger', title : 'Error FECHA', message : 'Fecha no puede estar vacia'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
-
-                                             if (itbis == "") {
+                                            
+                                             else if (itbis == "") {
                                                 $.toaster({ priority : 'danger', title : 'Error ITBIS', message : 'itbis no puede estar vacio'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
+                                            
 
-                                             if (total == "") {
+                                             else if (total == "") {
                                                 $.toaster({ priority : 'danger', title : 'Error TOTAL', message : 'Total no puede estar vacio'});
                                                 estatus = false;
                                             }
-                                            else{
-                                                 estatus = true;
-                                            }
-
+                                            
                                             if(estatus == true){
 
                                            $.ajax({

@@ -12,14 +12,19 @@
                                      <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Buscar <i class="material-icons">search</i></button>
                                     <a href="{% url 'export_excel2' %}"><button type="button" class="btn btn-danger btn-block"><i class="material-icons">cloud_download</i>Exportar</button></a>
 
-                                  <a href="{% url 'pagospast' %}">
+                                 <!-- <a href="{% url 'pagospast' %}">
                                                        <button type="button"  rel="tooltip" class="btn btn-danger " data-original-title="" title="">
                                                             <i class="material-icons">undo</i>
                                                         </button></a>
                                   <a href="{% url 'pagosfuture' %}">
                                                        <button type="button"  rel="tooltip" class="btn btn-danger " data-original-title="" title="">
                                                             <i class="material-icons">redo</i>
-                                                        </button></a>
+                                                        </button></a>-->
+
+
+                                    <ul class="pager"> {% if posts.has_previous %}
+    <li><a href="?page={{ posts.previous_page_number }}">Previous</a></li>{% endif %}{% if posts.has_next %}
+    <li><a href="?page={{ posts.next_page_number }}">Next</a></li>{% endif %}</ul>
 
 
                                     <div class="table-responsive">
@@ -40,7 +45,7 @@
                                             </thead>
                                             <tbody>
                                                
-                                              {% for gasto in gastos %}  
+                                              {% for gasto in posts %}  
                                                 <tr>
                                                     
                                                     <td>{{gasto.id | unlocalize}}</td>

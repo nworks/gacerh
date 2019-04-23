@@ -17,6 +17,7 @@ import os
 from datetime import datetime
 import datetime
 from django.core.mail.message import EmailMessage
+from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 
 def user_detail(request):
@@ -161,7 +162,7 @@ def register(request):
 		return render (request,'register.html',{'user_form':user_form, 'profile_form': profile_form})
 
 
-
+@staff_member_required
 def activate(request):
 	user = User.objects.filter(is_active=0)
 
