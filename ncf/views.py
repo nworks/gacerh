@@ -170,7 +170,7 @@ def admintable(request):
 		print "entro al form"
 		gasto1 = Gasto.objects.filter(fecha__year=int(ano)).filter(fecha__month=int(mes)).values_list('id', flat=True)
 		gasto2 = Detalleg.objects.filter(gasto__in=gasto1)[:100]
-		return render(request, 'adming.html',{'gasto':gasto2, 'gastos':gasto2.all()})
+		return render(request, 'adming.html',{'gasto':gasto2, 'posts':gasto2.all()})
 
 	elif request.method == 'GET':
 		mes = request.GET.get('mes')
@@ -213,13 +213,13 @@ def pagos(request):
 			usuario2 = User.objects.get(username=usuario)
 			print "el usuario"
 			print usuario2
-			gasto = Gasto.objects.filter(comprador=usuario2)[:100]
+			posts = Gasto.objects.filter(comprador=usuario2)
 		except Exception as e:
 			print e
-			gasto = Gasto.objects.all()[:100]
+			posts = Gasto.objects.all()
 					
 
-		return render(request, 'adminpago.html',{'gasto':gasto, 'gastos':gasto.all()})
+		return render(request, 'adminpago.html',{'posts':posts})
 	else:
 		
 		pagastos = Gasto.objects.all().order_by('-fecha')
