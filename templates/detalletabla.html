@@ -344,7 +344,7 @@
 
 
 
-                                            if (rnc.length < 8 || rnc.length > 11 && rnc != "" ) {
+                                            if (rnc.length < 8 && rnc.length > 11 && rnc != "" ) {
                                                $.toaster({ priority : 'danger', title : 'Error RNC', message : 'Rnc no valido'});
                                                estatus = false;
                                 
@@ -363,7 +363,7 @@
                                 
                                             }
                                             
-                                            else if (ncf.length < 10 || ncf.length > 12 && ncf != "" ) {
+                                            else if (ncf.length < 10 && ncf.length > 12 && ncf != "" ) {
                                                 $.toaster({ priority : 'danger', title : 'Error NCF', message : 'ncf no valido'});
                                                 estatus = false;
                                             }
@@ -385,7 +385,8 @@
                                                 estatus = false;
                                             }
                                             
-                                            if(estatus == true){
+
+                                            else{
 
                                            $.ajax({
                                                             data: { csrfmiddlewaretoken: '{{ csrf_token }}', 'rnc':rnc,'ncf':ncf,'detalle':detalle,
